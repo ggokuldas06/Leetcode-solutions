@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        vector<int>ans={};
+        vector<long>prefix;
+        prefix.push_back(nums[0]);
+        for(int i=1;i<nums.size();i++)
+        {
+            prefix.push_back(prefix[i-1]+nums[i]);
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(i-k>=0 && i+k<=nums.size()-1)
+            {
+                long lb=i+k;
+                if(lb-(2*k+1)>=0)
+                {
+                    long curr=prefix[lb]-prefix[lb-(2*k+1)];
+                    ans.push_back(curr/(2*k+1));
+                }
+                else
+                {
+                    long curr=prefix[lb];
+                    ans.push_back(curr/(2*k+1));
+                }
+
+            }
+            else
+            {
+                ans.push_back(-1);
+            }
+        }
+    return ans;
+    }
+};
+
+**********************
+time complexity: O(n)
+**********************
