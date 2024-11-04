@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+    int vc=0,left=0,ans=0;
+    string vowel="aeiou";
+    for(int x=0;x<k;x++)
+    {
+        if(vowel.find(s[x])!=string::npos)
+        {
+            vc++;
+        }
+    }
+    ans=vc;
+    for(int right=k;right<s.size();right++)
+    {
+        if(vowel.find(s[right])!=string::npos){
+            vc++;
+        }
+        if(vowel.find(s[left])!=string::npos){
+            vc--;
+        }
+        ans=max(vc,ans);
+        left++;
+    }
+    return ans; 
+    }
+};
+
+****************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/
+****************
