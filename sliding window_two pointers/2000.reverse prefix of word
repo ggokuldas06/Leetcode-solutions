@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void swapword(int left,int right,string &s)
+    {
+        while(left<right)
+        {
+            swap(s[left],s[right]);
+            left++;
+            right--;
+        }
+    }
+    string reversePrefix(string word, char ch) {
+        int right=word.find(ch);
+        int left=0;
+        swapword(left,right,word);
+        return word;
+    }
+};
+
+********
+Time Complexity: O(N)
+********
