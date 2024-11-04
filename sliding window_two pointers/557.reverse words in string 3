@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void swapstring(int l,int r,string &s){
+        while (l<r)
+        {
+            swap(s[l],s[r]);
+            l++;
+            r--;
+        }
+    }
+    string reverseWords(string s) {
+        int left=0;
+        for(int right=0;right<s.size()+1;right++)
+        {
+            if(s[right]==' ' || s[right] =='\0')
+            {
+                swapstring(left,right-1, s);
+                left=right+1;
+            }
+        }
+        return s;
+    }
+};
+
+****************
+time complexity: O(n)
+****************
