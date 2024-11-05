@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& cards) {
+        int left=0,ans=INT_MAX;
+        unordered_map<int,int>hash;
+        for(int right =0;right<cards.size();right++)
+        {
+            hash[cards[right]]++;
+            if(hash[cards[right]]>=2)
+            {
+                ans=min(ans,right-left+1);
+                while(hash[cards[right]]>=2)
+                {
+                    ans=min(ans,right-left+1);
+                    hash[cards[left]]--;
+                    left++;
+                }
+            }
+        }
+        return ans==INT_MAX?-1:ans;
+    }
+};
+
+***********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/minimum-consecutive-cards-to-pick-up/
+***********************
