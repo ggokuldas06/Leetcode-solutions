@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        unordered_map<char,int>h1;
+        unordered_map<char,int>h2;
+        for(auto x:ransomNote)
+        {
+            h1[x]++;
+        }
+        for(auto x:magazine)
+        {
+            h2[x]++;
+        }
+        for(auto [key,value]:h1)
+        {
+            if(h2[key]<value)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+*********************************************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/ransom-note/description/
+*********************************************
