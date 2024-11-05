@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int largestUniqueNumber(vector<int>& nums) {
+        unordered_map<int,int> hash;
+        for(int x:nums)
+        {
+            hash[x]++;
+        }
+        int ans=-1;
+        for(auto [key,value]:hash)
+        {
+            if(key>ans && value==1)
+            {
+                ans=key;
+            }
+        }
+        return ans;
+    }
+};
+
+*******************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/largest-unique-number/
+*******************
