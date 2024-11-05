@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool isPathCrossing(string path) {
+        set<vector<int>>hash;
+        int a=0,b=0;
+        hash.insert({a,b});
+        for(auto x:path)
+        {
+            if(x=='N') b++;
+            else if(x=='E') a++;
+            else if(x=='W') a--;
+            else b--;
+            if(hash.find({a,b})!=hash.end())
+            {
+                return true;
+            }
+            else
+            {
+                hash.insert({a,b});
+            }
+        }
+        return false;
+    }
+};
+
+
+*****************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/path-crossing/
+*****************
