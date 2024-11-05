@@ -1,0 +1,38 @@
+class Solution {
+public:
+    long digitsum(int num)
+    {
+        long sum=0;
+        while(num!=0)
+        {
+            int d=num%10;
+            sum+=d;
+            num/=10;
+        }
+        return sum;
+    }
+    int maximumSum(vector<int>& nums) {
+        unordered_map<long,vector<int>> hash;
+        int ans=-1;
+        for(auto x:nums)
+        {
+            long dig=digitsum(x);
+            hash[dig].push_back(x);
+        }
+        for(auto[key,value]:hash){
+            if(value.size()>=2)
+            {
+                sort(value.begin(),value.end());
+                ans=max((value[value.size()-1]+value[value.size()-2]),ans);
+
+            }
+        }
+        return ans;
+    }
+};
+
+*************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/description/
+*************************
