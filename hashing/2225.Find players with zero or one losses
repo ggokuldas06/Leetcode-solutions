@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        unordered_set<int> win;
+        unordered_set<int> players;
+        unordered_map<int,int>lose;
+        vector<int>nlost;
+        vector<int>olost;
+        vector<vector<int>> ans;
+        for(int i=0;i<matches.size();i++)
+        {
+            int winner=matches[i][0];
+            int loser=matches[i][1];
+            win.insert(winner);
+            lose[loser]++;
+            players.insert(winner);
+            players.insert(loser);
+        }
+        for(int x:players)
+        {
+            if(lose.find(x)==lose.end())
+            {
+                nlost.push_back(x);
+            }
+            else
+            {
+                if(lose[x]==1)
+                {
+                    olost.push_back(x);
+                }
+            }
+        }
+        sort(nlost.begin(),nlost.end());
+        sort(olost.begin(),olost.end());
+        ans.push_back(nlost);
+        ans.push_back(olost);
+        return ans;
+    }
+};
+
+*************************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/find-players-with-zero-or-one-losses/
+*************************************
