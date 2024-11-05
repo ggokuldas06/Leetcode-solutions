@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int left=0,ans=0;
+        unordered_set<int>hash;
+        for(int right=0;right<s.size();right++)
+        {
+            if(hash.find(s[right])==hash.end())
+            {
+                hash.insert(s[right]);
+                ans=max(ans,right-left+1);
+            }
+            else
+            {
+                while(hash.find(s[right])!=hash.end())
+                {
+                    hash.erase(s[left]);
+                    left++;
+                    ans=max(ans,right-left+1);
+                }
+                hash.insert(s[right]);
+            }
+        }
+        return ans;
+    }
+};
+
+***********************************************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+***********************************************************
