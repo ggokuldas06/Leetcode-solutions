@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        unordered_map<int, int> occurrence; // Map to store cumulative sums and their first occurrences
+        int sum = 0, max_len = 0; // Initialize variables
+        
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i] == 0 ? -1 : 1; // Update cumulative sum
+            
+            if (sum == 0) max_len = max(max_len, i + 1); // Update max length if current subarray is valid
+            else if (occurrence.find(sum) != occurrence.end()) // Update max length using stored index
+                max_len = max(max_len, i - occurrence[sum]);
+            else occurrence[sum] = i; // Store first occurrence of cumulative sum
+        }
+        
+        return max_len; // Return maximum length of contiguous subarray
+    }
+};
+
+
+*******************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/contiguous-array/
+*******************************
