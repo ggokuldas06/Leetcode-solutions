@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countElements(vector<int>& arr) {
+        unordered_set <int> hash(arr.begin(),arr.end());
+        int counter=0;
+        for(auto i:arr)
+        {
+            if(hash.find(i+1)!=hash.end())
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
+};
+
+*****************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/counting-elements/description/
+*****************
