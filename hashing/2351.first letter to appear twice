@@ -1,0 +1,24 @@
+class Solution {
+public:
+    char repeatedCharacter(string s) {
+        unordered_map <char,int> hash;
+        for(int i=0;i<s.size();i++)
+        {
+            if(hash.find(s[i])!=hash.end())
+            {
+                return s[i];
+            }
+            else
+            {
+                hash[s[i]]=i;
+            }
+        }
+        return ' ';
+    }
+};
+
+*************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/first-letter-to-appear-twice/
+*************
