@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string destCity(vector<vector<string>>& paths) {
+        unordered_set<string>outgoing;
+        unordered_set<string>places;
+        for(auto x:paths)
+        {
+            places.insert(x[0]);
+            places.insert(x[1]);
+            outgoing.insert(x[0]);
+        }
+        for(auto x : places)
+        {
+            if(outgoing.find(x)==outgoing.end())
+            {
+                return x;
+            }
+        }
+        return "";
+    }
+};
+*********************
+  Time complexity O(n)
+  easy
+  https://leetcode.com/problems/destination-city/
+*********************
+  
