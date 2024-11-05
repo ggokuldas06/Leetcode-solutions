@@ -1,0 +1,2 @@
+* if problem in put is an inter array and we need to calculate multiple sum of subbarray build a prefix sum
+* sum of subbaray [6->9] is prefix[9]-prefix[6]
