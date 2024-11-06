@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int,int>hash;
+        unordered_set<int>count;
+        for(auto x:arr)
+        {
+            hash[x]++;
+        }
+        for(auto [key,value]:hash)
+        {
+            if(count.find(value)!=count.end())
+            {
+                return false;
+            }
+            else
+            {
+                count.insert(value);
+            }
+        }
+        return true;
+    }
+};
+
+*********************************************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/unique-number-of-occurrences/
+*********************************************
