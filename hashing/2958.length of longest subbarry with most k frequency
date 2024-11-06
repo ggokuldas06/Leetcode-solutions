@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxSubarrayLength(vector<int>& nums, int k) {
+        int ans=0,left=0;
+        unordered_map<int,int>hash;
+        for(int right=0;right<nums.size();right++)
+        {
+            hash[nums[right]]++;
+            while(hash[nums[right]]>k)
+            {
+                hash[nums[left]]--;
+                left++;
+                ans=max(ans,right-left+1);
+            }
+            ans=max(ans,right-left+1);
+        }
+        return ans;
+    }
+};
+************************************
+time complexity O(n)
+medium
+https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/
+************************************
