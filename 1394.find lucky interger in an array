@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findLucky(vector<int>& arr) {
+        int lucky=-1;
+        unordered_map<int,int>hash;
+        for(auto x:arr)
+        {
+            hash[x]++;
+        }
+        for(auto [key,value]:hash)
+        {
+            if(key>lucky && key==value)
+            {
+                lucky=key;
+            }
+        }
+        return lucky;
+    }
+};
+
+******************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/find-lucky-integer-in-an-array/description/
+******************
