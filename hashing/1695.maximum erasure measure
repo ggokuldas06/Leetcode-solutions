@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int left=0,value=0,ans=0;
+        unordered_set<int>hash;
+        for(int right=0;right<nums.size();right++)
+        {
+            if(hash.find(nums[right])==hash.end())
+            {
+                value+=nums[right];
+                hash.insert(nums[right]);
+                ans=max(value,ans);
+            }
+            else
+            {
+                while(hash.find(nums[right])!=hash.end())
+                {
+                    value-=nums[left];
+                    hash.erase(nums[left]);
+                    left++;
+                }
+                hash.insert(nums[right]);
+                value+=nums[right];
+                ans=max(ans,value);
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+**********************************
+Time complexity O(n)
+medium
+**********************************
+**********************************
