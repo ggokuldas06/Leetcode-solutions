@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maxFrequencyElements(vector<int>& nums) {
+        unordered_map<int,int>hash;
+        int maxfreq=0,sum=0;
+        for(int i:nums)
+        {
+            hash[i]++;
+            if(hash[i]>maxfreq)
+            {
+                maxfreq=hash[i];
+            }
+        }
+        for(auto[key,value]:hash)
+        {
+            if(value==maxfreq)
+            {
+                sum+=value;
+            }
+        }
+        return sum;
+    }
+};
+
+***************************************
+Time complexity O(N)
+easy
+https://leetcode.com/problems/count-elements-with-maximum-frequency/description/
+***************************************
