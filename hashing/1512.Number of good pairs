@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int numIdenticalPairs(vector<int>& nums) {
+       int sum = 0;  // Initialize sum to 0
+        map<int, int> count;  // Map to store the frequency of elements
+
+        // First loop to count the frequency of each element
+        for (int i = 0; i < nums.size(); i++) {
+            count[nums[i]] += 1;
+        }
+
+        // Second loop to calculate the number of identical pairs
+        for (auto k : count) {
+            sum += ((k.second) * (k.second - 1)) / 2;  // Combinations formula: n * (n-1) / 2
+        }
+
+        return sum;  // Return the final count of identical pairs
+    }
+};
+
+****************************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/number-of-good-pairs/
+****************************
