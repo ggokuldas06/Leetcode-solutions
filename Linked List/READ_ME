@@ -1,0 +1,50 @@
+built using self refential structure
+***********************************************************\
+SAMPLE CODE: SINGLY LINKED LIST
+***************
+struct LinkedListNode {
+    int val;
+    LinkedListNode *next;
+    LinkedListNode(int val): val (val), next(nullptr) {}
+};
+
+int main() {
+    LinkedListNode* one = new LinkedListNode(1); // CREATING NEW NODES WITH VALUE PASSED AS PARAMETER
+    LinkedListNode* two = new LinkedListNode(2);
+    LinkedListNode* three = new LinkedListNode(3);
+    one->next = two; // LINKING THE NODES BY ASSIGNING THE NEXT POINTER TO THE POINTER OF THE NEXT NODE
+    two->next = three;
+    LinkedListNode* head = one; // ASSIGNING DUMMY NODE TO NOT LOSE ANY NODES
+    
+    cout << head->val << endl;
+    cout << head->next->val << endl;
+    cout << head->next->next->val << endl;
+}
+***************
+SAMPLE CODE : DOUBLY LINKED LIST
+-> HAS AN PREV POINTER FOR REVERSE TRAVERSAL
+***************
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode *prev;
+    ListNode(int val) : val(val), next(nullptr), prev(nullptr) {}
+};
+
+// Let node be the node at position i
+void addNode(ListNode* node, ListNode* nodeToAdd) {
+    ListNode* prevNode = node->prev;
+    nodeToAdd->next = node;
+    nodeToAdd->prev = prevNode;
+    prevNode->next = nodeToAdd;
+    node->prev = nodeToAdd;
+}
+
+void deleteNode(ListNode* node) {
+    ListNode* prevNode = node->prev;
+    ListNode* nextNode = node->next;
+    prevNode->next = nextNode;
+    nextNode->prev = prevNode;
+}
+***************
+***********************************************************
