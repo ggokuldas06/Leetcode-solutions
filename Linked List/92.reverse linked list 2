@@ -1,0 +1,67 @@
+class Solution {
+public:
+    ListNode* helper(ListNode* leftnode, ListNode* stopNode) {
+    ListNode* prev = nullptr;
+    ListNode* curr = leftnode;
+    while (curr != stopNode) {  // Stop reversing at stopNode
+        ListNode* nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+    return prev;
+}
+
+
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (left == right) return head;  // No need to reverse if left == right
+        
+        ListNode* PL = nullptr;
+        ListNode* PR = nullptr;
+        ListNode* leftnode = nullptr;
+        ListNode* rightnode = nullptr;
+        ListNode* curr = head;
+        int pos = 1;
+
+        // Traverse the list to identify PL, leftnode, rightnode, and PR
+        while (curr != nullptr) {
+            if (pos == left - 1) {
+                PL = curr;  // PL is the node just before leftnode
+            }
+            if (pos == left) {
+                leftnode = curr;  // Left boundary of the reversal
+            }
+            if (pos == right) {
+                rightnode = curr;  // Right boundary of the reversal
+                PR = rightnode->next;  // PR is the node just after the rightnode
+                break;
+            }
+            curr = curr->next;
+            pos++;
+        }
+
+        // Reverse the sublist between leftnode and rightnode
+        ListNode* reversedHead = helper(leftnode, PR);
+
+
+        // If PL is not null, connect the reversed portion to the rest of the list
+        if (PL != nullptr) {
+            PL->next = reversedHead;
+        } else {
+            head = reversedHead;  // If PL is null, we are reversing from the head
+        }
+
+        // Connect the leftnode (after reversal) to PR
+        leftnode->next = PR;
+
+        return head;
+    }
+};
+
+
+
+*************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/reverse-linked-list-ii/description/
+*************************
