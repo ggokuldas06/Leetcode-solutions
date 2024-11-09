@@ -1,0 +1,33 @@
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* curr = head;
+        ListNode* prev = nullptr;
+
+        while (curr != nullptr && curr->next != nullptr) {
+            if (curr->val == curr->next->val) {
+                while (curr->next != nullptr && curr->val == curr->next->val) {
+                    curr = curr->next;
+                }
+                if (prev != nullptr) {
+                    prev->next = curr->next;
+                } else {
+                    head = curr->next;
+                }
+                curr = curr->next; 
+            } else {
+                prev = curr;
+                curr = curr->next;
+            }
+        }
+
+        return head;
+    }
+};
+
+
+*********************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+*********************
