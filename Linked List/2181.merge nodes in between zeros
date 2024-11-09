@@ -1,0 +1,45 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode* ins= new ListNode(0);
+        ListNode* curr=head;
+        ListNode* rehead=ins;
+        while(curr!=nullptr)
+        {
+            if(curr->val==0)
+            {
+                ListNode* dummy=curr->next;
+                int sum=0;
+                while(dummy!=nullptr && dummy->val!=0)
+                {
+                    sum+=dummy->val;
+                    dummy=dummy->next;
+                }
+                if(sum!=0){
+                ListNode* temp= new ListNode(sum);
+                ins->next=temp;
+                ins=ins->next;
+                }
+            }
+            curr=curr->next;
+        }
+        return rehead->next;;
+    }
+};
+
+
+**************************
+Time complexity o(n)
+medium
+https://leetcode.com/problems/merge-nodes-in-between-zeros/
+**************************
