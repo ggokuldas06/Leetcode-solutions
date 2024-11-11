@@ -1,0 +1,27 @@
+STACK:
+-> ordered collection
+-> added and removed from the same end
+-> LIFO
+INTERFACE:
+        // Declaration: C++ supports multiple implementations, but we will be using
+        // std::stack. Specify the data type
+        stack<int> stack;
+        
+        // Pushing elements:
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        
+        // Popping elements:
+        // Note, unlike other languages, popping here does not return the popped value
+        stack.pop();
+        stack.pop();
+        
+        // Check if empty
+        stack.empty(); // false
+        
+        // Check element at top
+        stack.top(); // 1
+        
+        // Get size
+        stack.size(); // 1
