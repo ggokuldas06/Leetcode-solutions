@@ -1,0 +1,49 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        int index=0,ans=0;
+        int length=0;
+        unordered_map<int,int>hash;
+        ListNode* tempcurr=head;
+        while(tempcurr!=nullptr)
+        {
+            length++;
+            tempcurr=tempcurr->next;
+        }
+        ListNode* curr=head;
+        while(curr!=nullptr)
+        {
+            if(hash.find(index)!=hash.end())
+            {
+                int temp=curr->val+hash[index];
+                ans=max(ans,temp);
+                index++;
+                curr=curr->next;
+            }
+            else
+            {
+                int twin=length-index-1;
+                hash[twin]=curr->val;
+                curr=curr->next;
+                index++;
+            }
+        }
+        return ans;
+    }
+};
+
+****************************
+Time complexity o(n)
+medium
+https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
+****************************
