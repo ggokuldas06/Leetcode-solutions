@@ -25,3 +25,20 @@ INTERFACE:
         
         // Get size
         stack.size(); // 1
+
+QUEUE:
+-> FIFO-first in first out
+-> elements are added and removed from opposite sides
+-> cannot use dynaic array as complexity for adding and removing is o(n)
+-> a doubly linked list can be used for O(1) operations
+-> adding to a queue is "enqueue" and removing from a queue is "dequeue".
+-> There is also a data structure called a deque, short for double-ended queue, and pronounced "deck". In a deque, you can add or delete elements from both ends. A normal queue designates adding to one end and deleting to another end.
+-> mainly used to implement BFS in trees.
+
+INTERFACE:
+-> queue.push(x) // pushes element x to the front
+-> queue.front() // returns an reference to the oldest(first) element in the queue
+-> queue.back()// returns an reference to the newest(last) element in the queue.
+-> queue.pop() // removes the oldest(first) element from the queue
+-> queue.size() // size of the queue
+-> queue.empty() // true if empty false otherwise.
