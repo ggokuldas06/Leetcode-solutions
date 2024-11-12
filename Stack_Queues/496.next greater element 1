@@ -1,0 +1,42 @@
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> answer;
+        unordered_map<int,int>hash;
+        stack<int>stack;
+        for(int i=0;i<nums2.size();i++)
+        {
+            if(!stack.empty() && nums2[stack.top()]<nums2[i])
+            {
+                while(!stack.empty() && nums2[stack.top()]<nums2[i])
+                {
+                    hash[nums2[stack.top()]]=nums2[i];
+                    stack.pop();
+                }
+                stack.push(i);
+            }
+            else
+            {
+                stack.push(i);
+            }
+        }
+        for(auto x:nums1)
+        {
+            if(hash.find(x)==hash.end())
+            {
+                answer.push_back(-1);
+            }
+            else
+            {
+                answer.push_back(hash[x]);
+            }
+        }
+        return answer;
+    }
+};
+
+**************************************************************
+Time complexity o(n)
+easy
+https://leetcode.com/problems/next-greater-element-i/
+**************************************************************
