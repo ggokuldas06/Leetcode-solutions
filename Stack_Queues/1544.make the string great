@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string makeGood(string s) {
+        string ans="";
+        for(auto x :s)
+        {
+            if(!ans.empty() && isupper(x) && ans.back()==tolower(x))
+            {
+                ans.pop_back();
+            }
+            else if(!ans.empty() && islower(x) && ans.back()==toupper(x))
+            {
+                ans.pop_back();
+            }
+            else ans+=x;
+        }
+        return ans;
+    }
+};
+
+***********************
+time complexity O(n)
+easy
+https://leetcode.com/problems/make-the-string-great/
+***********************
