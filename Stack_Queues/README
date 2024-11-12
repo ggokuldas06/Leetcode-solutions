@@ -36,7 +36,7 @@ QUEUE:
 -> mainly used to implement BFS in trees.
 
 INTERFACE:
--> queue.push(x) // pushes element x to the front
+-> queue.push(x) // pushes element x to the back
 -> queue.front() // returns an reference to the oldest(first) element in the queue
 -> queue.back()// returns an reference to the newest(last) element in the queue.
 -> queue.pop() // removes the oldest(first) element from the queue
