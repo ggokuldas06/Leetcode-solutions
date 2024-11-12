@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> answer;
+        deque<int> dq;  
+        int left = 0, right = 0;
+        for (right = 0; right < k; right++) {
+            while (!dq.empty() && nums[dq.back()] < nums[right]) {
+                dq.pop_back();
+            }
+            dq.push_back(right);
+        }
+        answer.push_back(nums[dq.front()]);
+        for (right = k; right < nums.size(); right++) {
+            left++;
+            if (!dq.empty() && dq.front() < left) {
+                dq.pop_front();
+            }
+            while (!dq.empty() && nums[dq.back()] < nums[right]) {
+                dq.pop_back();
+            }
+            dq.push_back(right);
+            answer.push_back(nums[dq.front()]);
+        }
+
+        return answer;
+    }
+};
+
+
+
+***************************
+Time complexity o(n)
+hard
+https://leetcode.com/problems/sliding-window-maximum/submissions/1450305965/
+***************************
