@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int>stack;
+        int index=0;
+        vector<int>answer(temperatures.size(),0);
+        while(index<temperatures.size())
+        {
+            if(!stack.empty() && temperatures[stack.top()]<temperatures[index])
+            {
+                int t=0;
+                while(!stack.empty() && temperatures[stack.top()]<temperatures[index] && t>=0){
+                    t=stack.top();
+                    answer[t]=index-t;
+                    stack.pop();
+                }
+                stack.push(index);
+                index++;
+            }
+            else
+            {
+                stack.push(index);
+                index++;
+            }
+        }
+        return answer;
+    }
+};
+
+**********************************
+  Time complexity O(n)
+  medium
+  https://leetcode.com/problems/daily-temperatures/
+**********************************
