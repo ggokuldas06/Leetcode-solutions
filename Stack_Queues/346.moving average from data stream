@@ -1,0 +1,45 @@
+class MovingAverage {
+public: 
+    int window=0;
+    MovingAverage(int size) {
+        window=size;
+    }
+    
+    queue<int>queue;
+    double sum=0.0;
+    double next(int val) {
+        double answer=0.0;
+        if(queue.size()<window)
+        {
+            sum+=val;
+            queue.push(val);
+            answer=sum/queue.size();
+            return answer;
+        }
+        else
+        {
+            queue.push(val);
+            sum+=val;
+            while(!queue.empty() && queue.size()>window)
+            {
+                int temp=queue.front();
+                queue.pop();
+                sum-=temp;
+            }
+            return sum/queue.size();
+        }
+        return answer;
+    }
+};
+
+/**
+ * Your MovingAverage object will be instantiated and called as such:
+ * MovingAverage* obj = new MovingAverage(size);
+ * double param_1 = obj->next(val);
+ */
+
+*************************
+Time complexity o(n)
+easy
+https://leetcode.com/problems/moving-average-from-data-stream/submissions/1450215958/
+*************************
