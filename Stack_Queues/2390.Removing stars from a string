@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string removeStars(string s) {
+        string ans="";
+        for (auto x: s)
+        {
+            if(x=='*' && ans!="")
+            {
+                ans.pop_back();
+            }
+            else if(x!='*')
+            {
+                ans+=x;
+            }
+        }
+        return ans;
+    }
+};
+
+
+**************************
+time complexity O(N)
+medium
+https://leetcode.com/problems/removing-stars-from-a-string/
+**************************
