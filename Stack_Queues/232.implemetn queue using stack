@@ -1,0 +1,52 @@
+class MyQueue {
+public:
+    MyQueue() {
+        
+    }
+    stack<int>stacks;
+    stack<int>dummy;
+    
+    void push(int x) {
+        if(stacks.size()==0)
+        {
+            stacks.push(x);
+            return;
+        }
+        else
+        {
+            while(stacks.size()>0)
+            {
+                dummy.push(stacks.top());
+                stacks.pop();
+            }
+            stacks.push(x);
+            while(dummy.size()>0)
+            {
+                stacks.push(dummy.top());
+                dummy.pop();
+            }
+        }
+        return;
+        
+    }
+    
+    int pop() {
+        int x=stacks.top();
+        stacks.pop();
+        return x;
+    }
+    
+    int peek() {
+        return stacks.top();
+    }
+    
+    bool empty() {
+        return stacks.size()==0;
+    }
+};
+
+********************************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/implement-queue-using-stacks/
+********************************
