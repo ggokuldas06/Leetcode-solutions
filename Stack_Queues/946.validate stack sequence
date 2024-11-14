@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        stack<int>stacks;
+        stack<int>pu;
+        stack<int>po;
+        for(auto x: pushed)
+        {
+            pu.push(x);
+        }
+        for(auto x: popped)
+        {
+            po.push(x);
+        }
+        while(!pu.empty() && !po.empty())
+        {
+            if(pu.top()==po.top())
+            {
+                pu.pop();po.pop();
+            }
+            else if(!stacks.empty() && pu.top()==stacks.top())
+            {
+                pu.pop();
+                stacks.pop();
+            }
+            else
+            {
+                stacks.push(po.top());
+                po.pop();
+            }
+        }
+        while(!pu.empty() && !stacks.empty())
+        {
+            if(pu.top()==stacks.top())
+            {
+                pu.pop();stacks.pop();
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+
+************************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/validate-stack-sequences/
+************************************
