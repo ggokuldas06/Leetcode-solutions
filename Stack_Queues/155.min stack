@@ -1,0 +1,39 @@
+class MinStack {
+public:
+    MinStack() {
+        
+    }
+    stack<int>st;
+    stack<int>dummy;
+    void push(int val) {
+        st.push(val);
+        return;
+    }
+    
+    void pop() {
+        st.pop();
+        return;
+    }
+    
+    int top() {
+        return st.top();
+    }
+    
+    int getMin() {
+        dummy=st;
+        int ans=dummy.top();
+         while(!dummy.empty())
+         {
+            int x=dummy.top();
+            dummy.pop();
+            if(x<ans) ans=x;
+         }
+         return ans;
+    }
+};
+
+************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/min-stack/description/
+************************
