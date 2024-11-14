@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int> stack;
+        for (auto x : asteroids) {
+            if (!stack.empty() && ((x > 0 && stack.top() > 0) || (x < 0 && stack.top() < 0))) {
+                stack.push(x);
+            } else {
+                while (!stack.empty() && (x < 0 && stack.top() > 0)) {
+                    int temp1 = stack.top();
+                    if (abs(temp1) > abs(x)) {
+                        x = 0;  
+                    } else if (abs(temp1) < abs(x)) {
+                        stack.pop();
+                    } else {
+                        x = 0;  
+                        stack.pop();
+                    }
+                }
+                if (x != 0) {
+                    stack.push(x);
+                }
+            }
+        }
+        vector<int> answer;
+        while (!stack.empty()) {
+            answer.push_back(stack.top());
+            stack.pop();
+        }
+        reverse(answer.begin(), answer.end());
+        return answer;
+    }
+};
+
+
+*************************
+Time complexity O(N)
+medium
+https://leetcode.com/problems/asteroid-collision/
+*************************
