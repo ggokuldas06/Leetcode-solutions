@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        queue<int> r;
+        queue<int> q;
+        int n=senate.size();
+        for(int i=0;i<n;i++)
+        {
+            if(senate[i]=='R')
+            {
+                r.push(i);
+            }
+            else q.push(i);
+        }
+        while(!r.empty() && !q.empty())
+        {
+            if(r.front()<q.front())
+            {
+                q.pop();
+                int temp=r.front()+n;
+                r.push(temp);
+                r.pop();
+            }
+            else
+            {
+                r.pop();
+                int temp=q.front()+n;
+                q.push(temp);
+                q.pop();
+            }
+        }
+        return !r.empty()?"Radiant":"Dire";
+    }
+};
+
+***********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/dota2-senate/
+***********************
