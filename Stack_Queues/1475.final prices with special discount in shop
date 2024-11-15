@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector <int> helper(vector <int> nums)
+    {
+        stack<int>st;
+        vector <int>answer(nums.size(),0);
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+            while(!st.empty() && nums[st.top()]>nums[i])
+            {
+                st.pop();
+            }
+            answer[i]=st.empty()?0:nums[st.top()];
+            st.push(i);
+        }
+        return answer;
+    }
+    vector<int> finalPrices(vector<int>& prices) {
+        vector <int> dis=helper(prices);
+        vector<int> final(prices.size(),0);
+        for(int i=0;i<prices.size();i++)
+        {
+            final[i]=prices[i]-dis[i];
+        }
+        return final;
+    }
+};
+
+**********************
+TIme complexity O(n)
+easy
+https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/
+**********************
