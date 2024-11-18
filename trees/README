@@ -1,0 +1,17 @@
+TREES
+-> linked list points to the next node but trees point to the children
+A->B
+-> A  parent of B and B is child of A
+-> binary tree consists maximum of two childnode
+IMPLEMENTATION OF BINARY TREE:
+// defining a binary tree
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int val) : val(val), left(nullptr), right(nullptr) {}
+};
+// access pointers
+root.left // returns pointer to the left child of the root
+root.right // returns pointer to the right child of the root
+root.val // returns value of the root
