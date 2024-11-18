@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> mostCompetitive(vector<int>& nums, int k) {
+        vector <int> stack;
+        vector <int> ans;
+        for(int i=0;i<nums.size();i++)
+        {
+            while(stack.size()!=0 && stack.back()>nums[i] && stack.size()-1+nums.size()-i>=k )
+            {
+                stack.pop_back();
+            }
+            stack.push_back(nums[i]);
+            if(stack.size()==k) ans=stack;
+        }
+        return ans;
+    }
+};
+
+***************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/find-the-most-competitive-subsequence/
+***************************
