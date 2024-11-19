@@ -1,0 +1,36 @@
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+        int left=0;
+        long long ans=0;
+        if(nums.size()<k || nums.size()==0) return 0;
+        if(nums.size()==1) return nums[0];
+        unordered_set<int> hash;
+        long long sum=0;
+        for(int right=0;right<nums.size();right++)
+        {
+            while(hash.find(nums[right])!=hash.end())
+            {
+                sum-=nums[left];
+                hash.erase(nums[left]);
+                left++;
+            }
+            hash.insert(nums[right]);
+            sum+=nums[right];
+            while(hash.size()>k)
+            {
+                sum-=nums[left];
+                hash.erase(nums[left]);
+                left++;
+            }
+            if (hash.size()==k) ans=max(ans,sum);
+        }
+        return ans;
+    }
+};
+
+****************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/?envType=daily-question&envId=2024-11-19
+****************************
