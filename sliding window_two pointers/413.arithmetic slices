@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        if(nums.size()<3){
+            return 0;
+        }
+        int count=0,ans=0,prev=200001;
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]-nums[i-1]==prev){
+                count++;
+            }
+            else{
+                ans+=count*(count+1)/2;
+                count=0;
+            }
+            prev=nums[i]-nums[i-1];
+        }
+        if(count>0){
+            ans+=count*(count+1)/2;
+        }
+        return ans;
+    }
+};
+
+*******************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/arithmetic-slices/
+*******************
