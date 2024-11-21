@@ -34,3 +34,5 @@ void dfs(TreeNode* node) {
     dfs(node->right);
     return;
 }
+-> for binary tree, left value is greater then the root value and right value is lesser than the current value
+
