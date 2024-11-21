@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector <pair<double,int>>hash;
+    void dfs(TreeNode* root,int level)
+    {
+        if(!root) return;
+        if(hash.size()<level)
+        {
+            hash.push_back({root->val,1});
+
+        }
+        else
+        {
+            hash[level-1].first+=root->val;
+            hash[level-1].second+=1;
+        }
+        dfs(root->left,level+1);
+        dfs(root->right,level+1);
+    }
+    vector<double> averageOfLevels(TreeNode* root) {
+        vector<double>ans;
+        dfs(root,1);
+        for(auto x:hash)
+        {
+            ans.push_back(x.first/x.second);
+        }
+        return ans;
+    }
+};
+
+
+*********************
+Time complexity O(n)
+easy 
+https://leetcode.com/problems/average-of-levels-in-binary-tree/
+*********************
