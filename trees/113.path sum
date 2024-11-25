@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>> ans;
+    
+    void dfs(TreeNode* root, vector<int> ele, int sum, int target) {
+        if (!root) return;
+
+        sum += root->val;
+        ele.push_back(root->val);
+
+        if (sum == target && root->left == nullptr && root->right == nullptr) {
+            ans.push_back(ele);
+        }
+
+        dfs(root->left, ele, sum, target);
+        dfs(root->right, ele, sum, target);
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) return ans;
+        
+        dfs(root, {}, 0, targetSum);
+        
+        return ans;
+    }
+};
+
+
+****************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/path-sum-ii/description/
+****************
