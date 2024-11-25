@@ -1,0 +1,29 @@
+class Solution {
+public:
+    TreeNode* invert(TreeNode* root)
+    {
+        if(root==nullptr) return root;
+        swap(root->left,root->right);
+        invert(root->left);
+        invert(root->right);
+        return root;
+    }
+    bool same(TreeNode* n1,TreeNode* n2)
+    {
+        if(n1==nullptr && n2==nullptr) return true;
+        if(n1==nullptr || n2==nullptr) return false;
+        if(n1->val!=n2->val || !same(n1->left,n2->left) || !same(n1->right,n2->right)) return false;
+        return true;
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==nullptr) return true;
+        invert(root->right);
+        return same(root->left,root->right);
+    }
+};
+
+***************************
+TIme complexity O(n)
+easy
+https://leetcode.com/problems/symmetric-tree/
+***************************
