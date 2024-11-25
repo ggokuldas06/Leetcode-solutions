@@ -1,0 +1,25 @@
+class Solution {
+public:
+    TreeNode* ans=nullptr;
+    void dfs(TreeNode* o,TreeNode* c,TreeNode* target)
+    {
+        if(!o) return ;
+        if(o->val==target->val)
+        {
+            ans=c;
+            return;
+        } 
+        dfs(o->left,c->left,target);
+        dfs(o->right,c->right,target);
+    }
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        dfs(original,cloned,target);
+        return ans;
+    }
+};
+
+**********************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/
+**********************
