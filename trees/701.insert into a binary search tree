@@ -1,0 +1,42 @@
+class Solution {
+public:
+    void dfs(TreeNode* root,TreeNode* target)
+    {
+        if(target->val>root->val)
+        {
+            if(root->right==nullptr)
+            {
+                root->right=target;
+                return;
+            }
+            else
+            {
+                dfs(root->right,target);
+            }
+        }
+        else
+        {
+            if(root->left==nullptr)
+            {
+                root->left=target;
+                return;
+            }
+            else
+            {
+                dfs(root->left,target);
+            }
+        }
+    }
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        TreeNode* target=new TreeNode(val);
+        if(root==nullptr) return target;
+        dfs(root,target);
+        return root;
+    }
+};
+
+***********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/insert-into-a-binary-search-tree/
+***********************
