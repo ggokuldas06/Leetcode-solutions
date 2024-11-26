@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool dfs(TreeNode* root,long maxi,long mini)
+    {
+        if(root==nullptr) return true;
+        if(root->val>=maxi || root->val<=mini) return false;
+        bool l=dfs(root->left,root->val,mini);
+        bool r=dfs(root->right,maxi,root->val);
+        return l&&r;
+    }
+    bool isValidBST(TreeNode* root) {
+       return dfs(root,LONG_MAX,LONG_MIN); 
+    }
+};
+
+
+  ****************************************************
+  Time complexity O(n)
+  medium
+  https://leetcode.com/problems/validate-binary-search-tree/
+  ****************************************************
