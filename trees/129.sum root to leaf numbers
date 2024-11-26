@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int sum=0;
+    void dfs(TreeNode* root,int prev)
+    {
+        if(root==nullptr) return;
+        prev=(10*prev)+root->val;
+        if(root->left==nullptr && root->right==nullptr)
+        {
+            sum+=prev;
+            return;
+        }
+        dfs(root->left,prev);
+        dfs(root->right,prev);
+    }
+    int sumNumbers(TreeNode* root) {
+        dfs(root,0);
+        return sum;
+    }
+};
+
+*********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/sum-root-to-leaf-numbers/?envType=study-plan-v2&envId=top-interview-150
+*********************
