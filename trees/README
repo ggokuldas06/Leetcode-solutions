@@ -66,3 +66,8 @@ void printAllNodes(TreeNode* root) {
 ->used to traverse depth wise
 ->implemented using a queue
 ->best time is O(n)
+//binary search tree
+->it is also a type of binary tree
+->it's right element is greater than the current node and the left node is lesser than the current node
+->best case O(logn)
+->worst case O(n)
