@@ -1,0 +1,37 @@
+class Solution {
+public:
+    unordered_map<int,vector<pair<int,int>>>d;
+    vector<int>temp;
+    void dfs(TreeNode* root,int x,int y)
+    {
+        if(!root)return;
+        if(d.find(y)==d.end()) temp.push_back(y);
+        d[y].push_back({x,root->val});
+        dfs(root->left,x+1,y-1);
+        dfs(root->right,x+1,y+1);
+    }
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        dfs(root,0,0);
+        vector<vector<int>>ans;
+        sort(temp.begin(),temp.end());
+        for(auto x :temp)
+        {
+            sort(d[x].begin(),d[x].end());
+            vector<int>column;
+            for(auto y:d[x])
+            {
+                column.push_back(y.second);
+            }
+            ans.push_back(column);
+        }
+        return ans;
+
+    }
+};
+
+
+  ***********************
+  Time complexity O(n)
+  hard
+  https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/
+  ***********************
