@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    map<int,pair<int,int>>d;
+    void dfs(Node* root,int x,int y)
+    {
+        if(!root) return;
+        if(d.find(y)==d.end() ||d[y].first>x)
+        {
+            d[y]={x,root->data};
+        }
+        dfs(root->left,x+1,y-1);
+        dfs(root->right,x+1,y+1);
+    }
+    vector<int> topView(Node *root) {
+        // code here
+        vector<int>ans;
+        dfs(root,0,0);
+        for(auto x:d)
+        {
+            ans.push_back(x.second.second);
+        }
+        return ans;
+    }
+};
+
+******************
+Time complexity O(n)
+hard
+https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+******************
