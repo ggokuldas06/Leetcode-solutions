@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool areOccurrencesEqual(string s) {
+        unordered_map<char,int>d;
+        for(auto x:s)
+        {
+            if(d.find(x)==d.end()) d[x]=1;
+            else d[x]++;
+        }
+        unordered_set<int>temp;
+        for(auto c:d)
+        {
+            temp.insert(c.second);
+        }
+        return temp.size()==1;
+    }
+};
+
+***********************
+Time complexity O(n)
+easy
+https://leetcode.com/problems/check-if-all-characters-have-equal-number-of-occurrences/
+***********************
