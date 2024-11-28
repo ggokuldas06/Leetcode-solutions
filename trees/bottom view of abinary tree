@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    map<int,pair<int,int>>hash;
+    void dfs(Node* root,int x,int y)
+    {
+        if(root==nullptr) return;
+        if(hash.find(y)==hash.end()||hash[y].second<x)
+        {
+            hash[y]={root->data,x};
+        }
+        else if(hash[y].second == x)
+        {
+            hash[y] = {root->data, x}; 
+        }
+        dfs(root->left,x+1,y-1);
+        dfs(root->right,x+1,y+1);
+    }
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
+        dfs(root,0,0);
+        vector<int>ans;
+        for(auto x:hash)
+        {
+            ans.push_back(x.second.first);
+        }
+        return ans;
+    }
+};
+
+********************
+Time complexity O(n)
+hard
+https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+********************
