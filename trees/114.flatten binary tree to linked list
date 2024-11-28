@@ -1,0 +1,27 @@
+class Solution {
+public:
+    TreeNode* ans=new TreeNode(0);
+    TreeNode* dummy=ans;
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr) return;
+        dummy->left=nullptr;
+        dummy->right=root;
+        dummy=root;
+        TreeNode* left=root->left;
+        TreeNode* right=root->right;
+        dfs(left);
+        dfs(right);
+
+    }
+    void flatten(TreeNode* root) {
+        dfs(root);
+        root=ans->left;
+    }
+};
+
+****************************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
+****************************************
