@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int ans=-1;
+    int count=0;
+    void dfs(TreeNode* root,int k)
+    {
+        if(!root) return;
+
+        dfs(root->left,k);
+        count+=1;
+        if(count==k) ans=root->val;
+        dfs(root->right,k);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        dfs(root,k);
+        return ans;
+    }
+};
+
+
+********************
+  Time complexity O(n)
+  medium
+https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+********************
