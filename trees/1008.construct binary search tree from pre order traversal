@@ -1,0 +1,41 @@
+class Solution {
+public:
+    TreeNode* dfs(TreeNode* root,int bound,int target)
+    {
+        if(root==nullptr) return nullptr;
+        if (target < root->val) 
+        { 
+            if (root->left == nullptr) return root; 
+            return dfs(root->left, root->val, target); 
+        } 
+        else 
+        { 
+            if (root->right == nullptr) return root;
+            return dfs(root->right, bound, target);
+        }
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        if(preorder.size()==0) return nullptr;
+        TreeNode* ans=new TreeNode(preorder[0]);
+        TreeNode* dummy=ans;
+        for(int i=1;i<preorder.size();i++)
+        {
+            TreeNode* parent=dfs(ans,INT_MAX,preorder[i]);
+            if(preorder[i]<parent->val)
+            {
+                parent->left=new TreeNode(preorder[i]);
+            }
+            else
+            {
+                parent->right=new TreeNode(preorder[i]);
+            }
+        }
+        return ans;
+    }
+};
+
+************************
+Time complexity O(n)
+medium but very hard!
+https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/
+************************
