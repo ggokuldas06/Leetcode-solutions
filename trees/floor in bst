@@ -1,0 +1,18 @@
+class Solution{
+
+public:
+    int floor(Node* root, int x) {
+        // Code here
+        if(root==nullptr) return -1;
+        if(root->data==x) return root->data;
+        if(root->data>x) return floor(root->left,x);
+        int ans=floor(root->right,x);
+        return (ans!=-1)?ans:root->data;
+    }
+};
+
+*******************
+Time complexity O(n)
+medium
+https://www.geeksforgeeks.org/problems/floor-in-bst/1
+*******************
