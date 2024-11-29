@@ -1,0 +1,14 @@
+int findCeil(Node* root, int input) {
+    if (root == NULL) return -1;
+    if(root->data==input) return root->data;
+    if(root->data<input) return findCeil(root->right,input);
+    int ans=findCeil(root->left,input);
+    return ans>=input?ans:root->data;
+    // Your code here
+}
+
+*************
+Time complexity O(n)
+medium
+https://www.geeksforgeeks.org/problems/implementing-ceil-in-bst/1
+*************
