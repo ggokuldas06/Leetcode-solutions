@@ -1,0 +1,29 @@
+->DIRECTED GRAPHS:
+  * a->b means, a to b is possible but b to a is not
+->UNDIRECTED GRAPHS:
+  *a<->b means, a to b, and b to a is possible.
+->CONNECTED COMPONENT:
+  *group of nodes conneted by edges.
+-> number of nodes that can be used to reach a node: indegree
+-> number of nodes that can be used to leave a node: out degree
+->cyclic,acyclic
+-> graphs are just a concepts and not an structure in the memory
+->INPUT FORMATS:
+  * array of edges {{0,1},{1,2},{1,3}}
+    0 is connected to 1, 1 is connected to 2, 1 is connected to 3
+  * matriz
+-> form an hash map in the format node:{connected componenets}
+-> maintain a seen vector to eleminate infinite loops
+->FORMING AN GRAPH HASH MAP:
+**********************************************************************************************
+unordered_map<int, vector<int>> buildGraph(vector<vector<int>>& edges) {
+    unordered_map<int, vector<int>> graph;
+    for (vector<int>& edge: edges) {
+        int x = edge[0], y = edge[1];
+        graph[x].push_back(y);
+        // graph[y].push_back(x);
+        // uncomment the above line if the graph is undirected
+    }
+    return graph;
+}
+**********************************************************************************************
