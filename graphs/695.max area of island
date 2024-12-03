@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int dfs(int r, int c, int row, int col, vector<vector<int>>& seen, vector<vector<int>>& grid) {
+        if (r < 0 || r >= row || c < 0 || c >= col || grid[r][c] == 0 || seen[r][c] == true) 
+            return 0;
+        
+        seen[r][c] = true;
+        return 1 + dfs(r + 1, c, row, col, seen, grid) + dfs(r - 1, c, row, col, seen, grid) 
+                   + dfs(r, c + 1, row, col, seen, grid) + dfs(r, c - 1, row, col, seen, grid);
+    }
+
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int row = grid.size(), col = grid[0].size();
+        int ans = 0;
+        vector<vector<int>> seen(row, vector<int>(col, false));
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == 1 && !seen[i][j]) {
+                    ans = max(ans, dfs(i, j, row, col, seen, grid));
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
