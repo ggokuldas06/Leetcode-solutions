@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool dfs(int n,unordered_map<int,vector<int>>&graph,vector<bool>&seen,int curr,int destination)
+    {
+        if(curr==destination) return true;
+        if(graph.find(curr)==nullptr || seen[curr]==true) return false;
+        for(auto x:graph[curr])
+        {
+            seen[curr]=true;
+            if(dfs(n,graph,seen,x,destination)) return true;
+        }
+        return false;
+    }
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        unordered_map<int,vector<int>>graph;
+        vector<bool>seen(n,false);
+        for(auto x:edges)
+        {
+            graph[x[0]].push_back(x[1]);
+            graph[x[1]].push_back(x[0]);
+        }
+        return dfs(n,graph,seen,source,destination);
+    }
+};
