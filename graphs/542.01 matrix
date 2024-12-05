@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<vector<int>> mat;
+    vector<vector<int>>l={{1,0},{0,1},{-1,0},{0,-1}};
+    bool check(int row,int col)
+    {
+        return 0<=row && row<mat.size() && 0<=col && col<mat[0].size() && mat[row][col]==1;
+    }
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        queue<vector<int>>queue;
+        vector<vector<bool>>seen(mat.size(),(vector<bool>(mat[0].size(),false)));
+        this->mat=mat;
+        for(int row=0;row<mat.size();row++)
+        {
+            for(int col=0;col<mat[0].size();col++)
+            {
+                if(mat[row][col]==0)
+                {
+                    seen[row][col]=true;
+                    queue.push({row,col,1});
+                }
+            }
+        }
+        while(!queue.empty())
+        {
+            vector<int>curr=queue.front();
+            queue.pop();
+            int r=curr[0],c=curr[1],s=curr[2];
+            for(auto x:l)
+            {
+                int nextrow=r+x[0],nextcol=c+x[1];
+                if(check(nextrow,nextcol) && seen[nextrow][nextcol]==false)
+                {
+                    seen[nextrow][nextcol]=true;
+                    queue.push({nextrow,nextcol,s+1});
+                    mat[nextrow][nextcol]=s;
+                }
+            }
+        }
+        return mat;
+    }
+};
+*******************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/01-matrix/description/
+*******************************
