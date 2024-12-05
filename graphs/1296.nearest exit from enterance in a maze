@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<vector<int>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    
+    bool check(int row, int col, int n, int m) {
+        return row >= 0 && row < n && col >= 0 && col < m;
+    }
+    
+    bool acheck(int row, int col, const vector<int>& entrance, vector<vector<char>>& maze) {
+        return (row != entrance[0] || col != entrance[1]) &&
+               (row == 0 || col == 0 || row == maze.size() - 1 || col == maze[0].size() - 1) &&
+               maze[row][col] != '+';
+    }
+    
+    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+        int n = maze.size(), m = maze[0].size();
+        vector<vector<bool>> seen(n, vector<bool>(m, false));
+        queue<vector<int>> queue;
+        queue.push(entrance);
+        seen[entrance[0]][entrance[1]] = true;
+        int ans = 0;
+        
+        while (!queue.empty()) {
+            int size = queue.size();
+            ans++;
+            for (int i = 0; i < size; i++) {
+                vector<int> curr = queue.front();
+                queue.pop();
+                int cr = curr[0], cc = curr[1];
+                for (auto dir : directions) {
+                    int nr = cr + dir[0], nc = cc + dir[1];
+                    if (check(nr, nc, n, m) && !seen[nr][nc] && maze[nr][nc] != '+') {
+                        if (acheck(nr, nc, entrance, maze)) {
+                            return ans;
+                        }
+                        seen[nr][nc] = true;
+                        queue.push({nr, nc});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+
+*********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/nearest-exit-from-entrance-in-maze/description/
+*********************
