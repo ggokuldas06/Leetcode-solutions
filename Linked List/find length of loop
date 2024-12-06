@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    // Function to find the length of a loop in the linked list.
+    int countNodesinLoop(Node *head) {
+        // Code 
+        Node* slow=head;
+        Node* fast=head;
+        while(fast!=nullptr && fast->next!=nullptr)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast){
+                int dis=1;
+                Node* curr=slow->next;
+                while(curr!=slow)
+                {
+                    dis++;
+                    curr=curr->next;
+                }
+                return dis;
+            }
+        }
+        return 0;
+    }
+};
+
+*****************
+O(n)
+medium
+https://www.geeksforgeeks.org/problems/find-length-of-loop/1
+*****************
