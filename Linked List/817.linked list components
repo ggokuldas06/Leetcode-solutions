@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int numComponents(ListNode* head, vector<int>& nums) {
+        unordered_set<int>hash(nums.begin(),nums.end());
+        int ans=0;
+        while(head!=nullptr)
+        {
+            if(hash.find(head->val)!=hash.end())
+            {
+                ans++;
+                while(head!=nullptr && hash.find(head->val)!=hash.end())
+                {
+                    head=head->next;
+                }
+            }
+            else
+            {
+                head=head->next;
+            }
+        }
+        return ans;
+    }
+};
+
+
+*************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/linked-list-components/
+*************************
