@@ -17,6 +17,28 @@ public:
     }
 };
 
+
+
+*********[ALTERNATE METHOD]******************
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map<vector<int>,vector<string>>hash;
+        for(auto x:strs)
+        {
+            vector<int>cha(26,0);
+            for(auto i:x)
+            {
+                cha[i-'a']+=1;
+            }
+            hash[cha].push_back(x);
+        }
+        vector<vector<string>>ans;
+        for(auto j:hash) ans.push_back(j.second);
+        return ans;
+    }
+};
+
 ********************************
 time complexity O(n)
 medium
