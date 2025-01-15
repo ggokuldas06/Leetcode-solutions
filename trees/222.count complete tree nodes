@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int answer=0;
+    void dfs(TreeNode* root)
+    {
+        if(!root) return;
+        answer++;
+        dfs(root->right);
+        dfs(root->left);
+    }
+    int countNodes(TreeNode* root) {
+       dfs(root);
+       return answer; 
+    }
+};
+
+
+*********************
+Time complexity :O(n)
+https://leetcode.com/problems/count-complete-tree-nodes/
+easy
+*********************
