@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int>hash;
+        hash[0]=-1;
+        int sum=0;
+        for(int x=0;x<nums.size();x++)
+        {
+            sum+=nums[x];
+            int rem=sum%k;
+            if(hash.find(rem)!=hash.end())
+            {
+                if(x-hash[rem]>=2) return true;
+            }
+            else hash[rem]=x;
+        }
+        return false;
+    }
+};
+*********************
+Time complexity :O(n)
+medium
+https://leetcode.com/problems/continuous-subarray-sum/
+*********************
+
+
+
+
+
+
+
+
