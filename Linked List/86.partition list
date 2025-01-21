@@ -1,0 +1,47 @@
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode* fl = nullptr;
+        ListNode* cl = nullptr;
+        ListNode* fg = nullptr;
+        ListNode* cg = nullptr;
+
+        while (head != nullptr) {
+            ListNode* nextNode = head->next;
+            head->next = nullptr;
+
+            if (head->val < x) {
+                if (fl == nullptr) {
+                    fl = head;
+                    cl = head;
+                } else {
+                    cl->next = head;
+                    cl = cl->next;
+                }
+            } else {
+                if (fg == nullptr) {
+                    fg = head;
+                    cg = head;
+                } else {
+                    cg->next = head;
+                    cg = cg->next;
+                }
+            }
+            head = nextNode;
+        }
+
+        if (cl != nullptr) {
+            cl->next = fg;
+            return fl;
+        }
+
+        return fg;
+    }
+};
+
+
+************
+Time complexity O(n)
+https://leetcode.com/problems/partition-list/
+medium
+************
