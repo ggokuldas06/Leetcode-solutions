@@ -1,0 +1,16 @@
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(!root) return nullptr;
+        swap(root->left,root->right);
+        invertTree(root->right);
+        invertTree(root->left);
+        return root;
+    }
+};
+
+*****************
+Time complexity O(n)
+https://leetcode.com/problems/invert-binary-tree/description/
+easy
+*****************
