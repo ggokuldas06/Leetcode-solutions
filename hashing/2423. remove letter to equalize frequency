@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool equalFrequency(string word) {
+        
+        vector<int>ar(26,0);
+        for(auto x:word)
+        {
+            ar[x-'a']++;
+        }
+        for(auto x:word)
+        {
+            ar[x-'a']--;
+            unordered_map<int,int>hash;
+            for(int i:ar)
+            {
+                if(i>0) hash[i]++;
+            }
+            if(hash.size()==1) return true;
+            ar[x-'a']++;
+        }
+        return false;
+    }
+};
+
+
+********************
+TIme complexity O(n)
+easy
+leetcode https://leetcode.com/problems/remove-letter-to-equalize-frequency/
+********************
