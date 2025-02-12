@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool isEvenOddTree(TreeNode* root) {
+        queue<TreeNode*> queue;
+        int counter = 0;
+        queue.push(root);
+
+        while (!queue.empty()) {
+            int n = queue.size();
+            TreeNode* prev = nullptr;
+
+            for (int i = 0; i < n; i++) {
+                TreeNode* temp = queue.front();
+                queue.pop();
+
+                if (counter % 2 == 0) {
+                    if (temp->val % 2 == 0) return false;
+                    if (prev && temp->val <= prev->val) return false;
+                } else {
+                    if (temp->val % 2 != 0) return false;
+                    if (prev && temp->val >= prev->val) return false;
+                }
+
+                prev = temp;
+
+                if (temp->left) queue.push(temp->left);
+                if (temp->right) queue.push(temp->right);
+            }
+            counter++;
+        }
+        return true;
+    }
+};
+
+
+*************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/even-odd-tree/
+*************************
