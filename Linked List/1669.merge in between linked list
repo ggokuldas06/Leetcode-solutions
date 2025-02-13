@@ -1,0 +1,39 @@
+class Solution {
+public:
+    ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+        int counter = 0;
+        ListNode* dummy = list1;
+        ListNode* ath = nullptr;
+        ListNode* bth = nullptr;
+
+        while (dummy) {
+            if (counter == a - 1) {
+                ath = dummy; 
+            }
+            if (counter == b) {
+                bth = dummy->next;  
+                break;
+            }
+            dummy = dummy->next;
+            counter++;
+        }
+
+        ListNode* dummy2 = list2;
+        while (dummy2->next) {
+            dummy2 = dummy2->next;
+        }
+
+        ath->next = list2; 
+        dummy2->next = bth; 
+
+        return list1;
+    }
+};
+
+
+
+*********************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/merge-in-between-linked-lists/
+*********************
