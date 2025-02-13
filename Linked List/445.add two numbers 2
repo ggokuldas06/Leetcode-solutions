@@ -1,0 +1,79 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverse(ListNode* head)
+    {
+        ListNode* prev=nullptr;
+        while(head!=nullptr)
+        {
+            ListNode* next=head->next;
+            head->next=prev;
+            prev=head;
+            head=next;
+        }
+        return prev;
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        l1=reverse(l1);
+        l2=reverse(l2);
+        int val=0;
+        int carry=0;
+        ListNode* ans=new ListNode(0);
+        ListNode* dummy=ans;
+        while(l1&&l2){
+            val=(l1->val)+(l2->val)+carry;
+            carry=val/10;
+            val=val%10;
+            ListNode* nextNode= new ListNode(val);
+            ans->next=nextNode;
+            l1=l1->next;
+            l2=l2->next;
+            ans=ans->next;
+        }
+        while(l1){
+            val=carry+l1->val;
+            carry=val/10;
+            val=val%10;
+            ListNode* n=new ListNode(val);
+            ans->next=n;
+            l1=l1->next;
+            ans=ans->next;
+        }
+        while(l2){
+            val=carry+l2->val;
+            carry=val/10;
+            val=val%10;
+            ListNode* n=new ListNode(val);
+            ans->next=n;
+            l2=l2->next;
+            ans=ans->next;
+        }
+        while (carry!=0)
+        {
+            int digit=carry%10;
+            carry/=10;
+            ListNode* no=new ListNode(digit);
+            ans->next=no;
+            ans=ans->next;
+        }
+        dummy=dummy->next;
+        dummy=reverse(dummy);
+        return dummy;
+    }
+};
+
+
+*************************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/add-two-numbers-ii/
+*************************************
