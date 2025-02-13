@@ -1,0 +1,42 @@
+class MyHashMap {
+public:
+    vector<ListNode*> list;
+
+    MyHashMap() {}
+
+    void put(int key, int value) {
+        for (auto x : list) {
+            if (x->val == key) {
+                x->next->val = value; 
+                return;
+            }
+        }
+        ListNode* n_key = new ListNode(key);
+        ListNode* n_value = new ListNode(value);
+        n_key->next = n_value;
+        list.push_back(n_key);
+    }
+
+    int get(int key) {
+        for (auto x : list) {
+            if (x->val == key) {
+                return x->next->val;
+            }
+        }
+        return -1;
+    }
+
+    void remove(int key) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list[i]->val == key) {
+                delete list[i]->next; 
+                delete list[i];       
+                list.erase(list.begin() + i);
+                return;
+            }
+        }
+    }
+};
+***********************
+Time complexity O(n)
+***********************
