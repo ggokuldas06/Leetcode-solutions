@@ -1,0 +1,35 @@
+class Solution {
+public:
+    ListNode* reverse(ListNode* head) {
+        ListNode* prev = nullptr;
+        while (head != nullptr) {
+            ListNode* next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
+    ListNode* removeNodes(ListNode* head) {
+        head = reverse(head);
+        ListNode* ans = head;
+        ListNode* front = head;
+        int maxval = head->val;
+
+        while (head && head->next) { 
+            if (head->next->val >= maxval) {
+                maxval = head->next->val;
+                front = head->next;  
+                head = head->next;
+            } else {
+                head->next = head->next->next; 
+            }
+        }
+        
+        front->next = nullptr; 
+        
+        ans = reverse(ans);
+        return ans; 
+    }
+};
