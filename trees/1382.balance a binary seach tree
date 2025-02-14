@@ -35,6 +35,6 @@ public:
 };
 
 ***************************************
-Time limit exceeded O(n)
+Time limit exceeded O(nlogn)
 mdium
 ***************************************
