@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string smallestNumber(string pattern) {
+        pattern = "I" + pattern;  
+        stack<int> numbers;
+        string result = "";
+        int n = pattern.size();
+
+        for (int i = 1; i <= n; i++) {
+            numbers.push(i);
+            if (i == n || pattern[i] == 'I') {
+                while (!numbers.empty()) {
+                    result += to_string(numbers.top());
+                    numbers.pop();
+                }
+            }
+        }
+        return result;
+    }
+};
+
+
+
+************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/construct-smallest-number-from-di-string/?envType=daily-question&envId=2025-02-18
+************************
