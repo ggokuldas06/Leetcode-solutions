@@ -1,0 +1,39 @@
+class Solution {
+public:
+    unordered_map<int,vector<int>>graphD;
+    int t;
+    void backtrack(int x,vector<int>neighbours,vector<vector<int>>&ans,vector<int>&curr)
+    {
+        if(x==t)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        for(auto i:neighbours)
+        {
+            curr.push_back(i);
+            backtrack(i,graphD[i],ans,curr);
+            curr.pop_back();
+        }
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        int n=graph.size();
+        this->t=n-1;
+        for(int i=0;i<graph.size();i++)
+        {
+            this->graphD[i]=graph[i];
+        }
+        vector<vector<int>>ans={};
+        vector<int>curr={0};
+        backtrack(0,graphD[0],ans,curr);
+        return ans;
+    }
+};
+
+
+
+***************************
+Time complexity O(2^n)
+medium
+https://leetcode.com/problems/all-paths-from-source-to-target/
+***************************
