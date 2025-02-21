@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int k;
+    int n;
+    void backtrack(vector<vector<int>>&ans,vector<int>&curr,int i)
+    {
+        if(curr.size()==k)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        for(int j=i;j<=n;j++)
+        {
+            curr.push_back(j);
+            backtrack(ans,curr,j+1);
+            curr.pop_back();
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        this->k=k;
+        this->n=n;
+        vector<vector<int>>ans={};
+        vector<int>curr={};
+        backtrack(ans,curr,1);
+        return ans;
+    }
+};
+
+******************
+Time complexity O(k*(n!)/(n-1)!)
+medium
+https://leetcode.com/problems/combinations/description/
+******************
