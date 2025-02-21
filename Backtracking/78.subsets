@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void backtrack(vector<vector<int>>&ans,vector<int>&curr,int i,vector<int>nums)
+    {
+        if(i>nums.size()) return;
+        ans.push_back(curr);
+        for(int j=i;j<nums.size();j++)
+        {
+            curr.push_back(nums[j]);
+            backtrack(ans,curr,j+1,nums);
+            curr.pop_back();
+        }
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>ans;
+        vector<int>curr={};
+        backtrack(ans,curr,0,nums);
+        return ans;
+    }
+};
+
+
+************************
+TIme complexity O(2^n)
+medium
+https://github.com/ggokuldas06/Leetcode-solutions/new/main/Backtracking
+************************
