@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> nums;
+    vector<vector<int>> ans;
+    int target;
+    void backtrack(int index, int curr, vector<int>& temp) {
+        if (curr == target) {
+            ans.push_back(temp);
+            return;
+        }
+        for (int i = index; i < nums.size(); i++) {
+            if (curr + nums[i] <= target) {
+                temp.push_back(nums[i]);
+                backtrack(i, curr + nums[i], temp);
+                temp.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        nums = candidates;
+        this->target = target;
+        vector<int> temp = {};
+        backtrack(0, 0, temp);
+        return ans;
+    }
+};
+
+
+*****************************************
+Time complexity O(n^(t/m))
+medium
+https://leetcode.com/problems/combination-sum/
+*****************************************
