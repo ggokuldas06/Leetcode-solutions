@@ -1,0 +1,28 @@
+
+
+class Solution {
+public:
+    vector<string> ans;
+
+    void backtrack(TreeNode* root, string path) {
+        if (!root) return;
+
+        if (!path.empty()) path += "->";
+        path += to_string(root->val);
+
+        if (!root->left && !root->right) {
+            ans.push_back(path);
+            return;
+        }
+
+        backtrack(root->left, path);
+        backtrack(root->right, path);
+    }
+
+    vector<string> binaryTreePaths(TreeNode* root) {
+        if (root) {
+            backtrack(root, "");
+        }
+        return ans;
+    }
+};
