@@ -1,0 +1,41 @@
+class Solution {
+public:
+    unordered_map<char, string> letters = {
+        {'2', "abc"}, {'3', "def"},  {'4', "ghi"}, {'5', "jkl"},
+        {'6', "mno"}, {'7', "pqrs"}, {'8', "tuv"}, {'9', "wxyz"}
+        };
+        string phone;
+        vector<string>combinations;
+    void backtrack(int index,string curr)
+    {
+        if(curr.size()==phone.size())
+        {
+            combinations.push_back(curr);
+            return;
+        }
+        string letter_set=letters[phone[index]];
+        for(char l:letter_set)
+        {
+            curr.push_back(l);
+            backtrack(index+1,curr);
+            curr.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        phone=digits;
+        if(digits.size()==0)
+        {
+            return {};
+        }
+        backtrack(0,"");
+        return combinations;
+        
+    }
+};
+
+
+*********************************
+Time complexity O(n*4^n)
+medium
+https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+*********************************
