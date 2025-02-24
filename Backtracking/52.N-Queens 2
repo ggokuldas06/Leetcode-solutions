@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int n;
+    int backtrack(unordered_set<int> column,unordered_set<int>diagonal,unordered_set<int>anti,int row,int solutions)
+    {
+        if(row==n) return 1;
+        for(int col=0;col<n;col++)
+        {
+            int curr_diagonal=row-col;
+            int curr_AntiDiagonal=row+col;
+            if(column.find(col)!=column.end() || diagonal.find(curr_diagonal)!=diagonal.end()|| anti.find(curr_AntiDiagonal)!=anti.end())
+            {
+                continue;
+            }
+            column.insert(col);
+            diagonal.insert(curr_diagonal);
+            anti.insert(curr_AntiDiagonal);
+            solutions+=backtrack(column,diagonal,anti,row+1,0);
+            column.erase(col);
+            diagonal.erase(curr_diagonal);
+            anti.erase(curr_AntiDiagonal);
+        }
+        return solutions;
+    }
+    int totalNQueens(int n) {
+        this->n=n;
+        unordered_set<int>column;
+        unordered_set<int>diagonal;
+        unordered_set<int>anti;
+        return backtrack(column,diagonal,anti,0,0);
+    }
+};
+
+
+
+*****************************************
+Time complexity O(n!)
+hard
+https://leetcode.com/problems/n-queens-ii/description/
+*****************************************
