@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<string>ans;
+    vector<string> generateParenthesis(int n) {
+        backtrack("",0,0,n);
+        return ans;
+    }
+    void backtrack(string temp,int open,int close,int n)
+    {
+        if(temp.size()==2*n)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        if(open<n)
+        {
+            backtrack(temp+"(",open+1,close,n);
+        }
+        if(open>close)
+        {
+            backtrack(temp+")",open,close+1,n);
+        }
+        
+    }
+};
+
+*******************************************
+Time complxity O(2^n)
+medium
+https://leetcode.com/problems/generate-parentheses/
+*******************************************
