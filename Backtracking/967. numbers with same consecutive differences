@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int n,k;
+    vector<int>ans;
+    unordered_set<int>seen;
+    vector<int> numsSameConsecDiff(int n, int k) {
+        this->n=n;
+        this->k=k;
+        for(int i=1;i<10;i++)
+        {
+            backtrack(i,1);
+        }
+        return ans;
+    }
+    void backtrack(int curr,int len)
+    {
+        if(len==n){
+            if(find(seen.begin(),seen.end(),curr)==seen.end())
+            {
+                ans.push_back(curr); 
+                seen.insert(curr);
+            }
+            
+            return;
+        }
+        int digit=curr%10;
+        if((digit+k)<10)
+        {
+            backtrack(((curr*10)+(digit+k)),len+1);
+        }
+        if((digit-k)>=0)
+        {
+            backtrack(((curr*10)+(digit-k)),len+1);
+        }
+    }
+};
+
+
+************************************************
+time complexity O(2^n)
+medium
+https://leetcode.com/problems/numbers-with-same-consecutive-differences/description/
+************************************************
