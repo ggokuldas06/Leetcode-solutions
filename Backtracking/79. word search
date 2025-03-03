@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int m;
+    int n;
+    vector<vector<bool>>seen;
+    vector<vector<int>> directions={{1,0},{0,1},{-1,0},{0,-1}};
+    string target;
+    bool exist(vector<vector<char>>& board, string word) {
+        m=board.size();
+        n=board[0].size();
+        seen=vector(m,vector<bool>(n,false));
+        target=word;
+        for(int row=0;row<m;row++)
+        {
+            for(int col=0;col<n;col++)
+            {
+               if(board[row][col]==word[0])
+               {
+                seen[row][col]=true;
+                if(backtrack(row,col,board,1))
+                {
+                    return true;
+                }
+                seen[row][col]=false;
+               } 
+            }
+        }
+        return false;
+    }
+
+    bool backtrack(int row,int col,vector<vector<char>>&board,int index)
+    {
+        if(index==target.size()) return true;
+        for(vector<int>& x:directions)
+        {
+            int next_row=row+x[0];
+            int next_col=col+x[1];
+            if(valid(next_row,next_col)&&!seen[next_row][next_col])
+            {
+                
+                if(board[next_row][next_col]==target[index])
+                {
+                    seen[next_row][next_col]=true;
+                    if(backtrack(next_row,next_col,board,index+1))
+                    {
+                        return true;
+                    }
+                    seen[next_row][next_col]=false;
+                }
+                
+            }
+        }
+        return false;
+    }
+
+    bool valid(int row,int col)
+    {
+        return (0<=row && row<m && 0<=col && col<n);
+    }
+};
+
+
+
+*******************************************
+Time complexity O(n.m.3^l)
+medium
+https://leetcode.com/problems/word-search/description/
+*******************************************
