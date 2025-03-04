@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    vector<int>nums;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        this->nums=nums;
+        vector<int>curr={};
+        unordered_map<int,int>counter;
+        for(int x:nums) counter[x]++;
+        backtrack(curr,nums.size(),counter);
+        return ans;
+    }
+    void backtrack(vector<int>&curr,int n,unordered_map<int,int>&counter)
+    {
+        if(curr.size()==n)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        for(auto& x:counter)
+        {
+            int item=x.first;
+            int count=x.second;
+            if(count==0) continue;
+            curr.push_back(item);
+            counter[item]--;
+            backtrack(curr,n,counter);
+            curr.pop_back();
+            counter[item]++;
+        }
+    }
+};
+
+
+
+********************************
+Time complexity O(n*n!)
+medium
+https://leetcode.com/problems/permutations-ii/
+********************************
