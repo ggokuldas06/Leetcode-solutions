@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int>>ans={};
+    vector<int>nums;
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<int>curr={};
+        this->nums=nums;
+        backtrack(curr,0);
+        return ans;
+    }
+    void backtrack(vector<int>&curr,int index)
+    {
+        if(curr.size()>1)
+            {
+                ans.push_back(curr);
+            }
+        unordered_set<int>seen;
+        for( int i=index;i<nums.size();i++)
+        {
+            if (!curr.empty() && nums[i] < curr.back()) continue;
+            if(seen.find(nums[i])!=seen.end()) continue;
+            seen.insert(nums[i]);
+            curr.push_back(nums[i]);
+            backtrack(curr,i+1);
+            curr.pop_back();
+        }
+    }
+};
+
+
+
+***********************
+Time complexity O(2^n)
+medium
+https://leetcode.com/problems/non-decreasing-subsequences/
+***********************
