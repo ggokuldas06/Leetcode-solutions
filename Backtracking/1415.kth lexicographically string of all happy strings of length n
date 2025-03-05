@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<char> set={'a','b','c'};
+    vector<string> ans;
+
+    string getHappyString(int n, int k) {
+        string curr = "";
+        backtrack(curr, n);
+        return k <= ans.size() ? ans[k-1] : "";
+    }
+
+    void backtrack(string& curr, int n) {
+        if (curr.size() == n) {  
+            ans.push_back(curr);
+            return;
+        }
+
+        for (char x : set) {
+            if (curr.empty() || curr.back() != x) {  
+                curr += x;
+                backtrack(curr, n);
+                curr.pop_back();
+            }
+        }
+    }
+};
+
+
+
+********************************
+Time complexity O(2^n)
+medium
+https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/submissions/1563232197/
+********************************
