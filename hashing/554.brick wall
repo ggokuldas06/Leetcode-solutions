@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+        unordered_map<long long, int> edgeCount;  
+        int maxEdges = 0;
+        
+        for (auto& row : wall) {
+            long long pos = 0; 
+            for (int i = 0; i < row.size() - 1; ++i) {  
+                pos += row[i];  
+                edgeCount[pos]++;
+                maxEdges = max(maxEdges, edgeCount[pos]);
+            }
+        }
+        
+        return wall.size() - maxEdges;
+    }
+};
+
+
+*************************
+time complexity o(n*m)
+medium
+https://leetcode.com/problems/brick-wall/
+*************************
