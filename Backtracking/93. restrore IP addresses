@@ -1,0 +1,42 @@
+class Solution {
+public:
+    vector<string>ans;
+    int n;
+    vector<string> restoreIpAddresses(string s) {
+        n=s.size();
+        string curr="";
+        backtrack(0,0,s,curr);
+        return ans;
+    }
+    void backtrack(int index,int segments,string& s,string& curr)
+    {
+        if(index==n && segments==4)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        if(segments>4) return;
+        for(int i=1;i<=3 && index+i<=n;i++)
+        {
+            string sub=s.substr(index,i);
+            if(valid(sub))
+            {
+                string ni= curr.empty()?sub:curr+'.'+sub;
+                backtrack(index+i,segments+1,s,ni);
+            }
+        }
+    }
+    bool valid(string& x)
+    {
+        if(x.size()>1 && x[0]=='0') return false;
+        int num=stoi(x);
+        return num>=0 && num<=255;
+    }
+};
+
+
+***********************************
+Time complexity O(1)
+medium
+https://leetcode.com/problems/restore-ip-addresses/description/
+***********************************
