@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<vector<string>> ans;
+    int n;
+    vector<vector<string>> partition(string s) {
+        n=s.size();
+        vector<string> curr={};
+        backtrack(0,curr,s);
+        return ans;
+    }
+    void backtrack(int index, vector<string>& curr,string& s){
+        if(index==n)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        for(int i=index;i<n;i++)
+        {
+                string news=s.substr(index,i-index+1);
+                if(!ispla(news)) continue;
+                else
+                {
+                    curr.push_back(news);
+                    backtrack(i+1,curr,s);
+                    curr.pop_back();
+                }
+        }
+    }
+    bool ispla(string s)
+    {
+        int left=0;
+        int right=s.size()-1;
+        while(left<right)
+        {
+            if(s[left]!=s[right])
+            {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
