@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int n;
+    vector<vector<string>> ans;
+    
+    void backtrack(unordered_set<int>& column, unordered_set<int>& diagonal, unordered_set<int>& anti, int row, vector<string>& board) {
+        if (row == n) {
+            ans.push_back(board); 
+            return;
+        }
+
+        for (int col = 0; col < n; col++) {
+            int curr_diagonal = row - col;
+            int curr_AntiDiagonal = row + col;
+
+            if (column.count(col) || diagonal.count(curr_diagonal) || anti.count(curr_AntiDiagonal)) {
+                continue;
+            }
+            column.insert(col);
+            diagonal.insert(curr_diagonal);
+            anti.insert(curr_AntiDiagonal);
+            board[row][col] = 'Q';
+            backtrack(column, diagonal, anti, row + 1, board);
+            board[row][col] = '.';
+            column.erase(col);
+            diagonal.erase(curr_diagonal);
+            anti.erase(curr_AntiDiagonal);
+        }
+    }
+
+    vector<vector<string>> solveNQueens(int n) {
+        this->n = n;
+        unordered_set<int> column, diagonal, anti;
+        vector<string> board(n, string(n, '.')); 
+        backtrack(column, diagonal, anti, 0, board);
+        return ans;
+    }
+};
+
+
+
+*********************************************
+Time complexity o(n!)
+hard
+https://leetcode.com/problems/n-queens/
+*********************************************
