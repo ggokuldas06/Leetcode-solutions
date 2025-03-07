@@ -1,0 +1,63 @@
+class Solution {
+public:
+    int ans = 0;
+    int m, n, totalEmpty = 0;
+    vector<vector<int>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    vector<vector<bool>> seen;
+
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        m = grid.size();
+        n = grid[0].size();
+        seen = vector<vector<bool>>(m, vector<bool>(n, false));  
+
+        int start_i, start_j;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    start_i = i;
+                    start_j = j;
+                }
+                if (grid[i][j] != -1) totalEmpty++; 
+            }
+        }
+
+        backtrack(start_i, start_j, grid, 1);
+        return ans;
+    }
+
+    void backtrack(int i, int j, vector<vector<int>>& grid, int visitedCount) {
+        if (grid[i][j] == 2) {
+            if (visitedCount == totalEmpty) ans++; 
+            return;
+        }
+        if (grid[i][j] == -1) {
+            return;
+        }
+
+        seen[i][j] = true;
+
+        for (vector<int> direction : directions) {
+            int curr_i = i + direction[0];
+            int curr_j = j + direction[1];
+
+            if (valid(curr_i, curr_j) && !seen[curr_i][curr_j]) {
+                backtrack(curr_i, curr_j, grid, visitedCount + 1);
+            }
+        }
+
+        seen[i][j] = false; 
+    }
+    
+    bool valid(int i, int j) {
+        return 0 <= i && i < m && 0 <= j && j < n;
+    }
+};
+
+
+
+
+***********************************************************
+Time complexity O(4^(N*M))
+HARD
+https://leetcode.com/problems/unique-paths-iii/
+***********************************************************
