@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        vector<int>memo(cost.size()+1,0);
+        if(cost.size()<=1) return 0;
+        memo[0]=memo[1]=0;
+        for(int i=2;i<=cost.size();i++)
+        {
+            memo[i]=min((memo[i-1]+cost[i-1]),(memo[i-2]+cost[i-2]));
+        }
+        return memo[cost.size()];
+    }
+};
+
+
+****************************
+Time compledxity o(n)
+easy
+https://leetcode.com/problems/min-cost-climbing-stairs/
+****************************
