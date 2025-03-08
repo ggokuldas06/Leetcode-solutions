@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long mostPoints(vector<vector<int>>& questions) {
+        int n=questions.size();
+        vector<long long>memo(n+1);
+        for(int i=n-1;i>=0;i--)
+        {
+            int j=i+questions[i][1]+1;
+            memo[i]=max(questions[i][0]+memo[min(j,n)],memo[i+1]);
+        }
+        return memo[0];
+    }
+};
+
+
+*****************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/solving-questions-with-brainpower/description/
+*****************************
