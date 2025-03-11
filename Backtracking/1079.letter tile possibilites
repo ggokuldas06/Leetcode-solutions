@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int ans;
+    void backtrack(string curr,unordered_map<char,int>&hash)
+    {
+        if(curr.size()>0) ans++;
+        for(auto& x:hash)
+        {
+            char cha=x.first;
+            int count=x.second;
+            if(count==0) continue;
+            hash[cha]--;
+            backtrack(curr+cha,hash);
+            hash[cha]++;
+        }
+    }
+    int numTilePossibilities(string tiles) {
+        unordered_map<char,int>hash;
+        for(char x:tiles) hash[x]++;
+        backtrack("",hash);
+        return ans;
+    }
+};
+
+************************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/letter-tile-possibilities/
+************************************
