@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<string>ans;
+    void backtrack(int hexp,int mexp,int on,int n,int start)
+    {
+        if (on == n) {
+            int hour = hexp, minute = mexp;
+            if (hour >= 12 || minute >= 60) return;
+            string temp = to_string(hour) + ":" + (minute < 10 ? "0" : "") + to_string(minute);
+            ans.push_back(temp);
+            return;
+        }
+        for(int i=start;i<10;i++)
+        {
+            if(i<4)
+            {
+                backtrack(hexp+(1<<i),mexp,on+1,n,i+1); 
+            }
+            else
+            {
+                backtrack(hexp,mexp+(1<<(i-4)),on+1,n,i+1);
+            }
+        }
+        
+    }
+    vector<string> readBinaryWatch(int turnedOn) {
+        backtrack(0,0,0,turnedOn,0);
+        return ans;
+    }
+};
+
+
+******************************************
+Time complexity O(n)
+medium
+https://leetcode.com/problems/binary-watch/
+******************************************
