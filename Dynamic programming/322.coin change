@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+       vector<int>memo(amount+1,INT_MAX);
+       memo[0]=0;
+       for(int x:coins)
+       {
+        for(int i=x;i<=amount;i++)
+        {
+            if(memo[i-x]!=INT_MAX){
+                memo[i]=min(memo[i],memo[i-x]+1);
+            }
+        }
+       } 
+       return memo[amount]!=INT_MAX?memo[amount]:-1;
+    }
+};
+
+**************************
+Time complexity o(n*m)
+medium
+https://leetcode.com/problems/coin-change/
+**************************
