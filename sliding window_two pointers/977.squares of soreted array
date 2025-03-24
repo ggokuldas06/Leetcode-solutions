@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int left = 0, right = nums.size() - 1;
+        vector<int> ans(nums.size());
+        int index = nums.size() - 1;  
+        
+        while (left <= right) {
+            int dig_lef = nums[left] * nums[left];
+            int dig_rig = nums[right] * nums[right];
+
+            if (dig_lef > dig_rig) {
+                ans[index] = dig_lef;
+                left++;
+            } else {
+                ans[index] = dig_rig;
+                right--;
+            }
+            index--; 
+        }
+        return ans;
+    }
+};
+
+***************************************
+o(n)
+easy
+***************************************
