@@ -30,3 +30,35 @@ public:
 
 BOTTOM UP APPROACH
 ******************************************************
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        vector<vector<vector<int>>>table(prices.size()+1,vector(2,vector(k+1,0)));
+        for(int i=prices.size()-1;i>=0;i--)
+        {
+            for(int remain=1;remain<=k;remain++)
+            {
+                for(int holding=0;holding<2;holding++)
+                {
+                    int ans=table[i+1][holding][remain];
+                    if(holding==0)
+                    {
+                        ans=max(ans,table[i+1][1][remain]-prices[i]);
+                    }
+                    else if(holding==1)
+                    {
+                        ans=max(ans,table[i+1][0][remain-1]+prices[i]);
+                    }
+                    table[i][holding][remain]=ans;
+                }
+            }
+        }
+        return table[0][0][k];
+    }
+};
+
+**********************************************
+time complexity o(n*m)
+hard
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/submissions/1585237308/
+**********************************************
