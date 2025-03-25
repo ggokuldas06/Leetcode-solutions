@@ -1,0 +1,32 @@
+TOP DOWN IMPLEMENTATION
+******************************************************
+class Solution {
+public:
+    vector<vector<vector<int>>>memo;
+    vector<int>prices;
+    int maxProfit(int k, vector<int>& prices) {
+        this->prices=prices;
+        memo=vector(prices.size(),vector(2,vector(k+1,-1)));
+        return dp(0,0,k);
+    }
+    int dp(int index,int holding,int remain)
+    {
+        if(index==prices.size()||remain==0) return 0;
+        if(memo[index][holding][remain]!=-1) return memo[index][holding][remain];
+        int ans=dp(index+1,holding,remain);
+        if(holding==1)
+        {
+            ans=max(ans,prices[index]+dp(index+1,0,remain-1));
+        }
+        else if(holding==0)
+        {
+            ans=max(ans,dp(index+1,1,remain)-prices[index]);
+        }
+        memo[index][holding][remain]=ans;
+        return ans;
+    }
+};
+
+
+BOTTOM UP APPROACH
+******************************************************
