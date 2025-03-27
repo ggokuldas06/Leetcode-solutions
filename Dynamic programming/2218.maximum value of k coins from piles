@@ -1,0 +1,66 @@
+**************************************************************************************
+BOTTOM - TOP APPROACH
+**************************************************************************************
+class Solution {
+public:
+    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
+        int n=piles.size();
+        vector<vector<int>>dp(n+1,vector<int>(k+1,0));
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int remain=1;remain<=k;remain++)
+            {
+                dp[i][remain]=dp[i+1][remain];
+                int curr=0;
+                int y=piles[i].size();
+                for(int j=0;j<min(remain,y);j++)
+                {
+                    curr+=piles[i][j];
+                    dp[i][remain]=max(dp[i][remain],curr+dp[i+1][remain-j-1]);
+                }
+            }
+        }
+        return dp[0][k];
+    }
+};
+**************************************************************************************
+TOP - BOTTOM APPROACH
+**************************************************************************************
+class Solution {
+public:
+    vector<vector<int>>piles;
+    vector<vector<int>>memo;
+    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
+       this->piles=piles;
+       this->memo=vector<vector<int>>(piles.size(),vector<int>(k+1,-1));
+        return dp(0,k);
+    }
+    int dp(int i,int remain)
+    {
+        if(remain==0 || i==piles.size())
+        {
+            return 0;
+        }
+        if(memo[i][remain]!=-1)
+        {
+            return memo[i][remain];
+        }
+        int ans=dp(i+1,remain);
+        int curr=0;
+        int pilesize=piles[i].size();
+        for(int j=0;j< min(pilesize,remain);j++)
+        {
+            curr+=piles[i][j];
+            ans=max(ans,dp(i+1,remain-j-1)+curr);
+        }
+        memo[i][remain]=ans;
+        return ans;
+    }
+};
+**************************************************************************************
+Time complexity O(n*k*y)
+hard
+https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/
+**************************************************************************************
+
+
