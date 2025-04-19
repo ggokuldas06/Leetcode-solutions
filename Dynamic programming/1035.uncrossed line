@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size(),m=nums2.size();
+        vector<vector<int>>dp(n+1,vector(m+1,0));
+        for(int row=n-1;row>=0;row--)
+        {
+            for(int col=m-1;col>=0;col--)
+            {
+                if(nums1[row]==nums2[col])
+                {
+                    dp[row][col]=1+dp[row+1][col+1];
+                }
+                else{
+                    dp[row][col]=max(dp[row+1][col],dp[row][col+1]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+};
+
+
+*******************************************
+Time complexity O(n*m)
+medium
+https://leetcode.com/problems/uncrossed-lines/
+*******************************************
