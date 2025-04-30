@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int backtrack(int index, vector<string>& words, vector<int>& score, vector<int> freq) {
+        if(index == words.size()) return 0;
+        int skip = backtrack(index + 1, words, score, freq);
+        string curr = words[index];
+        int curr_score = 0;
+        bool can_use = true;
+        vector<int> temp = freq;
+        
+        for(char x : curr) {
+            int char_idx = x - 'a';
+            temp[char_idx]--;
+            if(temp[char_idx] < 0) {
+                can_use = false;
+                break;
+            }
+            curr_score += score[char_idx];
+        }
+        int use = 0;
+        if(can_use) {
+            use = curr_score + backtrack(index + 1, words, score, temp);
+        }
+        return max(skip, use);
+    }
+    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
+        vector<int> freq(26, 0);
+        for(char x : letters) {
+            freq[x - 'a']++;
+        }
+        return backtrack(0, words, score, freq);
+    }
+};
