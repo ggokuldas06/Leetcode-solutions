@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<unordered_set<char>> row_hash{9}, col_hash{9}, box_hash{9};
+
+    int helper(int row, int col) {
+        return (row / 3) * 3 + (col / 3);
+    }
+
+    void inis(vector<vector<char>>& board) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (board[row][col] != '.') {
+                    char val = board[row][col];
+                    row_hash[row].insert(val);
+                    col_hash[col].insert(val);  
+                    box_hash[helper(row, col)].insert(val);
+                }
+            }
+        }
+    }
+
+    bool backtrack(vector<vector<char>>& board) {  
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (board[row][col] == '.') {
+                    for (char i = '1'; i <= '9'; i++) {
+                        if (!row_hash[row].count(i) &&
+                            !col_hash[col].count(i) &&
+                            !box_hash[helper(row, col)].count(i)) {
+                            
+                            board[row][col] = i;
+                            row_hash[row].insert(i);
+                            col_hash[col].insert(i);
+                            box_hash[helper(row, col)].insert(i);
+
+                            if (backtrack(board)) return true;
+
+                            board[row][col] = '.';
+                            row_hash[row].erase(i);
+                            col_hash[col].erase(i);
+                            box_hash[helper(row, col)].erase(i);
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void solveSudoku(vector<vector<char>>& board) {
+        inis(board);
+        backtrack(board);
+    }
+};
+
+
+Time complexity O(9^m)
