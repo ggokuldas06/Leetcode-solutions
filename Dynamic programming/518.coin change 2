@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        vector<unsigned long long> memo(amount + 1, 0);  
+        memo[0] = 1;
+        for (long long x : coins) {
+            for (long long i = x; i <= amount; i++) {
+                if (memo[i - x] != 0) {  
+                    memo[i] += memo[i - x];
+                }
+            }
+        }
+        return memo[amount];
+    }
+};
