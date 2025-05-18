@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int halveArray(vector<int>& nums) {
+        priority_queue<double>heap(nums.begin(),nums.end());
+        double target=0;
+        int ans=0;
+        for(int x:nums){
+            target+=x;
+        }
+        target/=2;
+        while(target>0){
+            ans++;
+            double x=heap.top();heap.pop();
+            target-=(x/2);
+            heap.push(x/2);
+        }
+        return ans;
+    }
+};
+
+********************************
+Time complexity O(n log n)
+********************************
