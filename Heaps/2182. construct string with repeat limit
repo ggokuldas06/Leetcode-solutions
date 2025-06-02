@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string repeatLimitedString(string s, int repeatLimit) {
+        int freq[26] = {0};
+        for(char c : s) freq[c - 'a']++;
+
+        priority_queue<int> pq;
+        for(int i = 0; i < 26; ++i){
+            if(freq[i] > 0) pq.push(i);
+        }
+
+        string ans = "";
+        while(!pq.empty()){
+            int curr = pq.top(); pq.pop();
+            int use = min(repeatLimit, freq[curr]);
+            ans.append(use, 'a' + curr);
+            freq[curr] -= use;
+
+            if(freq[curr] > 0){
+                if(pq.empty()) break; 
+
+                int next = pq.top(); pq.pop();
+                ans += ('a' + next);
+                freq[next]--;
+
+                if(freq[next] > 0) pq.push(next);
+                pq.push(curr); 
+            }
+        }
+
+        return ans;
+    }
+};
