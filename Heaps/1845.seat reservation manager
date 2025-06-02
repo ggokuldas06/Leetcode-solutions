@@ -1,0 +1,22 @@
+class SeatManager {
+public:
+    unordered_set<int>hash;
+    priority_queue<int,vector<int>,greater<int>>heap;
+    SeatManager(int n) {
+        for(int i=1;i<=n;i++){
+            heap.push(i);
+        }
+    }
+    
+    int reserve() {
+        int x=heap.top();
+        hash.insert(x);
+        heap.pop();
+        return x;
+    }
+    
+    void unreserve(int seatNumber) {
+        hash.erase(seatNumber);
+        heap.push(seatNumber);
+    }
+};
