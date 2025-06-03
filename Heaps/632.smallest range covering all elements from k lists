@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<>> heap;
+        int maxi = INT_MIN;
+
+        for (int i = 0; i < nums.size(); i++) {
+            heap.emplace(nums[i][0], i, 0);
+            maxi = max(maxi, nums[i][0]);
+        }
+
+        vector<int> result = {INT_MIN, INT_MAX};
+
+        while (true) {
+            auto [val, listIndex, elemIndex] = heap.top();
+            heap.pop();
+
+            if ((result[0] == INT_MIN && result[1] == INT_MAX) || 
+    maxi - val < result[1] - result[0] || 
+    (maxi - val == result[1] - result[0] && val < result[0])) {
+    result = {val, maxi};
+}
+
+            if (elemIndex + 1 == nums[listIndex].size()) break;
+
+            heap.emplace(nums[listIndex][elemIndex + 1], listIndex, elemIndex + 1);
+            maxi = max(maxi, nums[listIndex][elemIndex + 1]);
+        }
+
+        return result;
+    }
+};
