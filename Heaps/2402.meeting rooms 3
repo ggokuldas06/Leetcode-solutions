@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int mostBooked(int n, vector<vector<int>>& meetings) {
+        sort(meetings.begin(), meetings.end());
+        
+        priority_queue<int, vector<int>, greater<int>> rooms;
+        for (int i = 0; i < n; i++) rooms.push(i);
+        
+        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> heapm;
+        vector<int> room(n, 0);
+
+        for (const auto& meet : meetings) {
+            int start = meet[0], end = meet[1];
+
+            while (!heapm.empty() && heapm.top().first <= start) {
+                rooms.push(heapm.top().second);
+                heapm.pop();
+            }
+
+            if (!rooms.empty()) {
+                int x = rooms.top();
+                rooms.pop();
+                room[x]++;
+                heapm.push({end, x});
+            } else {
+                auto [earliestEnd, roomNo] = heapm.top();
+                heapm.pop();
+                long long newEnd = earliestEnd + (end - start);
+                room[roomNo]++;
+                heapm.push({newEnd, roomNo});
+            }
+        }
+
+        int maxMeetings = 0;
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            if (room[i] > maxMeetings) {
+                maxMeetings = room[i];
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+};
+
