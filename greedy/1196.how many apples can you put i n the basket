@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxNumberOfApples(vector<int>& weight) {
+        sort(weight.begin(),weight.end());
+        int temp=0;
+        int ans=0;
+        for(int i=0;i<weight.size();i++){
+            if((temp+weight[i])>5000){
+                return ans;
+            }
+            temp+=weight[i];
+            ans++;
+        }
+        return ans;
+    }
+};
