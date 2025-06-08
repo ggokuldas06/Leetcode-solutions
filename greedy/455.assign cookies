@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
+        int fullchild=0,childind=0,cookieind=0;
+        while(childind<g.size() && cookieind<s.size()){
+            if(s[cookieind]>=g[childind])
+            {
+                fullchild+=1;
+                childind+=1;
+            }
+            cookieind++;
+        }
+        return fullchild;
+    }
+};
