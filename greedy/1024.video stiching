@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int videoStitching(vector<vector<int>>& clips, int time) {
+       sort(clips.begin(),clips.end());
+       int ans=0,curr_end=0,next_end=0,i=0,n=clips.size();
+       while(curr_end<time){
+        while(i<n && clips[i][0]<=curr_end){
+            next_end=max(next_end,clips[i][1]);
+            i++;
+        }
+        if(next_end==curr_end) return -1;
+        ans++;
+        curr_end=next_end;
+         
+       }
+       return ans;
+    }
+};
