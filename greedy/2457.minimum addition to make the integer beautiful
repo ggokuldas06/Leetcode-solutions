@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long makeIntegerBeautiful(long long n, int target) {
+        long long temp=n;
+        long long base=1;
+        while(helper(n)>target){
+            long long t=n%(base*10);
+            if(t!=0){
+                n+=(base*10)-t;
+            }
+            base*=10;
+        }
+        return n-temp;
+    }
+    long long helper(long long n){
+        long long ans=0;
+        while(n){
+            ans+=(n%10);
+            n/=10;
+        }
+        return ans;
+    }
+};
