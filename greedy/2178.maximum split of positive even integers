@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<long long> maximumEvenSplit(long long finalSum) {
+        long long curr=0;
+        vector<long long>ans={};
+        if(finalSum & 1) return ans; 
+        for(int i=2;curr+i<=finalSum;i+=2){
+            curr+=i;
+            ans.push_back(i);
+            if(curr==finalSum) return ans;
+        }
+        int t=ans.size();
+        ans[t-1]+=(finalSum-curr);
+        return ans;
+    }
+};
