@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minTaps(int n, vector<int>& ranges) {
+        vector<pair<int,int>> range;
+        for(int i = 0; i < ranges.size(); i++) {
+            range.push_back({max(0, i - ranges[i]), min(n, i + ranges[i])});
+        }
+        
+        sort(range.begin(), range.end());
+
+        int ans = 0, i = 0, curr_end = 0, next_end = 0;
+
+        while (curr_end < n) {
+            while (i < range.size() && range[i].first <= curr_end) {
+                next_end = max(next_end, range[i].second);
+                i++;
+            }
+            if (next_end == curr_end) return -1;  
+            curr_end = next_end;
+            ans++;
+        }
+        return ans;
+    }
+};
+
+
