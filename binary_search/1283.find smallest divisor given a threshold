@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int helper(vector<int>&nums,int& x){
+        int result=0;
+        for(int& num:nums){
+            result+=ceil((1.0*num)/x);
+        }
+        return result;
+    }
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int ans=-1,left=1,right=*max_element(nums.begin(),nums.end());
+        while(left<=right){
+            int mid =(right+left)/2;
+            int result=helper(nums,mid);
+            if(result<=threshold){
+                ans=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+        return ans;
+    }
+};
