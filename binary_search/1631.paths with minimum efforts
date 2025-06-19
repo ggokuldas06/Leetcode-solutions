@@ -1,0 +1,59 @@
+class Solution {
+public:
+    vector<vector<int>> graph;
+    int m, n;
+
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        this->graph = heights;
+        m = heights.size();
+        n = heights[0].size();
+
+        int left = 0, right = 0;
+        for (const vector<int>& row : heights) {
+            for (int num : row) {
+                right = max(right, num);  
+            }
+        }
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (check(mid)) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+
+    bool check(int eff) {
+        vector<vector<bool>> seen(m, vector<bool>(n, false));
+        stack<pair<int, int>> stk;
+        stk.push({0, 0});
+        seen[0][0] = true;
+
+        vector<pair<int, int>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
+        while (!stk.empty()) {
+            auto [row, col] = stk.top(); stk.pop();
+            if (row == m - 1 && col == n - 1) return true;
+
+            for (auto [dr, dc] : directions) {
+                int nr = row + dr, nc = col + dc;
+                if (valid(nr, nc) && !seen[nr][nc]) {
+                    if (abs(graph[nr][nc] - graph[row][col]) <= eff) {
+                        stk.push({nr, nc});
+                        seen[nr][nc] = true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool valid(int row, int col) {
+        return row >= 0 && row < m && col >= 0 && col < n;
+    }
+};
