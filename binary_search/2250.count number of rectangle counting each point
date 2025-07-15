@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> countRectangles(vector<vector<int>>& rectangles, vector<vector<int>>& points) {
+        vector<vector<int>> buckets(101);
+        for (auto& rec : rectangles) {
+            int width = rec[0];
+            int height = rec[1];
+            buckets[height].push_back(width);
+        }
+
+        for (int h = 1; h <= 100; ++h) {
+            sort(buckets[h].begin(), buckets[h].end());
+        }
+
+        vector<int> result;
+        for (auto& point : points) {
+            int x = point[0];
+            int y = point[1];
+            int count = 0;
+
+            for (int h = y; h <= 100; ++h) {
+                auto& widths = buckets[h];
+                auto it = lower_bound(widths.begin(), widths.end(), x);
+                count += widths.end() - it;
+            }
+
+            result.push_back(count);
+        }
+
+        return result;
+    }
+};
