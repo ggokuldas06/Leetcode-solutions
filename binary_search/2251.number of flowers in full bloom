@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int startbs(vector<int>&nums,int target){
+        int left=0,right=nums.size()-1;
+        int ans=-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(nums[mid]<=target){
+                ans=mid;
+                left=mid+1;
+            }
+            else{
+                right=mid-1;
+            }
+        }
+        return ans+1;
+    }
+    int endbs(vector<int>&nums,int target){
+        int left=0,right=nums.size()-1;
+        int ans=-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(nums[mid]<target){
+                ans=mid;
+                left=mid+1;
+            }
+            else{
+                right=mid-1;
+            }
+        }
+        return ans+1;
+    }
+    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& people) {
+        vector<int>st,et;
+        for(auto f:flowers){
+            st.push_back(f[0]);
+            et.push_back(f[1]);
+        }
+        sort(st.begin(),st.end());
+        sort(et.begin(),et.end());
+        vector<int> ans(people.size());
+        for(int i=0;i<people.size();i++){
+            ans[i]=startbs(st,people[i])-endbs(et,people[i]);
+        }
+        return ans;
+    }
+};
