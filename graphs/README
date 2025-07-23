@@ -27,3 +27,45 @@ unordered_map<int, vector<int>> buildGraph(vector<vector<int>>& edges) {
     return graph;
 }
 **********************************************************************************************
+graph: DFS
+unordered_set<int> seen;
+
+int fn(vector<vector<int>>& graph) {
+    seen.insert(START_NODE);
+    return dfs(START_NODE, graph);
+}
+
+int dfs(int node, vector<vector<int>>& graph) {
+    int ans = 0;
+    // do some logic
+    for (int neighbor: graph[node]) {
+        if (!seen.contains(neighbor)) {
+            seen.insert(neighbor);
+            ans += dfs(neighbor, graph);
+        }
+    }
+
+    return ans;
+}
+**********************************************************************************************
+graph: BFS
+int fn(vector<vector<int>>& graph) {
+    queue<int> queue;
+    unordered_set<int> seen;
+    queue.push(START_NODE);
+    seen.insert(START_NODE);
+    int ans = 0;
+
+    while (!queue.empty()) {
+        int node = queue.front();
+        queue.pop();
+        // do some logic
+        for (int neighbor: graph[node]) {
+            if (!seen.contains(neighbor)) {
+                seen.insert(neighbor);
+                queue.push(neighbor);
+            }
+        }
+    }
+}
+**********************************************************************************************
