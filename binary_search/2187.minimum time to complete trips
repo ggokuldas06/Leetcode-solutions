@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool check(long long new_time,vector<int>& time,int totalTrips){
+        long long curr=0;
+        for(int i:time){
+            curr+=new_time/i;
+        }
+        return curr>=totalTrips;
+    }
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        long long left=1;
+        long long ans=0;
+        long long right=INT_MIN;
+        for(long long i:time){
+            right=max(i,right);
+        }
+        right*=totalTrips;
+        while(left<=right){
+            long long new_time=left+(right-left)/2;
+            if(check(new_time,time,totalTrips)){
+                ans=new_time;
+                right=new_time-1;
+            }
+            else{
+                left=new_time+1;
+            }
+        }
+        return ans;
+    }
+};
