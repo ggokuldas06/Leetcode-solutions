@@ -6,3 +6,73 @@ SLIDING WINDOW
 ->asked for best longest least min
 ->psuedocode
   
+*********************************************************
+Two pointers: one input, opposite ends
+
+int fn(vector<int>& arr) {
+    int left = 0;
+    int right = int(arr.size()) - 1;
+    int ans = 0;
+
+    while (left < right) {
+        // do some logic here with left and right
+        if (CONDITION) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+
+    return ans;
+}
+*********************************************************
+Two pointers: two inputs, exhaust both
+int fn(vector<int>& arr1, vector<int>& arr2) {
+    int i = 0, j = 0, ans = 0;
+
+    while (i < arr1.size() && j < arr2.size()) {
+        // do some logic here
+        if (CONDITION) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+
+    while (i < arr1.size()) {
+        // do logic
+        i++;
+    }
+
+    while (j < arr2.size()) {
+        // do logic
+        j++;
+    }
+
+    return ans;
+}
+*********************************************************
+sliding window
+int fn(vector<int>& arr) {
+    int left = 0, ans = 0, curr = 0;
+
+    for (int right = 0; right < arr.size(); right++) {
+        // do logic here to add arr[right] to curr
+
+        while (WINDOW_CONDITION_BROKEN) {
+            // remove arr[left] from curr
+            left++;
+        }
+
+        // update ans
+    }
+
+    return ans;
+}
+
+*********************************************************
+string building
+string fn(vector<char>& arr) {
+    return string(arr.begin(), arr.end())
+}
+*********************************************************
