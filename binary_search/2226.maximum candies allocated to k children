@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool check(long long choc,vector<int>&candies,long long k){
+        long long count=0;
+        for(int i:candies){
+            if(i>=choc){
+                count+=i/choc;
+            }
+        }
+        return count>=k;
+    }
+    int maximumCandies(vector<int>& candies, long long k) {
+        long long left=1;
+        long long right=0;
+        long long ans=0;
+        for(long long i:candies){
+            right=max(right,i);
+        }
+        while(left<=right){
+            long long choc=left+(right-left)/2;
+            if(check(choc,candies,k)){
+                ans=max(ans,choc);
+                left=choc+1;
+            }
+            else{
+                right=choc-1;
+            }
+        }
+        return ans;
+    }
+};
