@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool check(int mid,vector<int>&price,int k){
+        int count=1;
+        int last=price[0];
+        for(int i=1;i<price.size();i++){
+            if((price[i]-last)>=mid){
+                count++;
+                last=price[i];
+            }
+            if(count>=k) return true;
+        }
+        return false;
+    }
+    int maximumTastiness(vector<int>& price, int k) {
+        int left=1;
+        int right=INT_MAX;
+        sort(price.begin(),price.end());
+        right=abs(price[0]-price[price.size()-1]);
+        int ans=0;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(check(mid,price,k)){
+                ans=mid;
+                left=mid+1;
+            }
+            else{
+                right=mid-1;
+            }
+        }
+        return ans;
+    }
+
+};
