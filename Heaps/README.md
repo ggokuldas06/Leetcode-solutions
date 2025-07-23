@@ -29,7 +29,10 @@ deletion O(n logn)
 find min/max O(1)
 *************************************************************************
 top k elemetns with heap
-vector<int> fn(vector<int>& arr, int k) {
+{
+
+
+'''vector<int> fn(vector<int>& arr, int k) {
     priority_queue<int, CRITERIA> heap;
     for (int num: arr) {
         heap.push(num);
@@ -44,6 +47,6 @@ vector<int> fn(vector<int>& arr, int k) {
         heap.pop();
     }
 
-    return ans;
+    return ans;'''
 }
 *************************************************************************
