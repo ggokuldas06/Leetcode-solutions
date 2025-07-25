@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool check(int mid, int m, int k, vector<int> &bloom) {
+    int bouquets = 0, flowers = 0;
+    for (int day : bloom) {
+        if (day <= mid) {
+            flowers++;
+            if (flowers == k) {
+                bouquets++;
+                flowers = 0;
+            }
+        } else {
+            flowers = 0;
+        }
+    }
+    return bouquets >= m;
+}
+
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int left=INT_MAX,right=INT_MIN;
+        if ((long long)k * m > bloomDay.size()) return -1;
+        for(int i:bloomDay){
+            left=min(left,i);
+            right=max(right,i);
+        }
+        int ans=-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(check(mid,m,k,bloomDay)){
+                ans=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+        return ans;
+    }
+};
