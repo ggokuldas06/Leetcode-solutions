@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool dfs(int x,int y,vector<vector<int>>& grid,int mid,vector<vector<bool>>&seen){
+        if(grid[x][y]>mid) return false;
+        if(x==grid.size()-1 && y==grid.size()-1) return true;
+        seen[x][y]=true;
+        int n=grid.size();
+        vector<pair<int,int>>dir={{1,0},{0,1},{-1,0},{0,-1}};
+        for(auto& [dx,dy]:dir){
+            int n_x=x+dx,n_y=y+dy;
+            if(n_x>=0 && n_y>=0 && n_x<n && n_y<n && !seen[n_x][n_y] && grid[n_x][n_y]<=mid){
+                seen[n_x][n_y]=true;
+                if(dfs(n_x,n_y,grid,mid,seen)) return true;
+            }
+        }
+        return false;
+    }
+    bool check(int mid,vector<vector<int>>& grid){
+        vector<vector<bool>>seen(grid.size(),vector<bool>(grid.size(),false));
+        return dfs(0,0,grid,mid,seen);
+
+    }
+    int swimInWater(vector<vector<int>>& grid) {
+        int left=grid[0][0];
+        int right=INT_MIN;
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid.size();j++){
+                right=max(right,grid[i][j]);
+            }
+        }
+        int ans=right;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(check(mid,grid)){
+                ans=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+        return ans;
+    }
+};
