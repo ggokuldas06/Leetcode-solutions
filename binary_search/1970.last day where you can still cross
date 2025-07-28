@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int ROWS, COLS;
+    vector<vector<int>> dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+
+    bool check(int day, vector<vector<int>>& cells) {
+        vector<vector<int>> grid(ROWS, vector<int>(COLS, 0));
+
+        for (int i = 0; i < day; ++i) {
+            int r = cells[i][0] - 1;
+            int c = cells[i][1] - 1;
+            grid[r][c] = 1;
+        }
+
+        queue<pair<int, int>> q;
+        vector<vector<bool>> visited(ROWS, vector<bool>(COLS, false));
+        for (int c = 0; c < COLS; ++c) {
+            if (grid[0][c] == 0) {
+                q.push({0, c});
+                visited[0][c] = true;
+            }
+        }
+
+        while (!q.empty()) {
+            auto [r, c] = q.front(); q.pop();
+            if (r == ROWS - 1) return true; 
+
+            for (auto& d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS &&
+                    !visited[nr][nc] && grid[nr][nc] == 0) {
+                    visited[nr][nc] = true;
+                    q.push({nr, nc});
+                }
+            }
+        }
+
+        return false;
+    }
+
+    int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
+        ROWS = row;
+        COLS = col;
+        int left = 1, right = cells.size(), ans = 0;
+
+        while (left <= right) {
+            int day = left + (right - left) / 2;
+            if (check(day, cells)) {
+                ans = day;
+                left = day + 1;
+            } else {
+                right = day - 1;
+            }
+        }
+
+        return ans;
+    }
+};
