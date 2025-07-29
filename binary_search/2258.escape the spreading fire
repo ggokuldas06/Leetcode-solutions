@@ -1,0 +1,100 @@
+class Solution {
+public:
+    vector<vector<int>> dir = {{1,0}, {0,1}, {-1,0}, {0,-1}};
+    
+    vector<vector<int>> fire(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        vector<vector<int>> fireTime(n, vector<int>(m, INT_MAX));
+        queue<vector<int>> q;
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(grid[i][j] == 1) {
+                    q.push({i, j});
+                    fireTime[i][j] = 0;
+                }
+            }
+        }
+
+        while(!q.empty()) {
+            vector<int> curr = q.front(); q.pop();
+            int x = curr[0], y = curr[1];
+
+            for(auto d : dir) {
+                int nx = x + d[0], ny = y + d[1];
+                if(nx >= 0 && nx < n && ny >= 0 && ny < m &&
+                   grid[nx][ny] != 2 && fireTime[nx][ny] == INT_MAX) {
+                    fireTime[nx][ny] = fireTime[x][y] + 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+
+        return fireTime;
+    }
+
+   bool check(vector<vector<int>>& grid, vector<vector<int>>& fireTime, int time) {
+    int n = grid.size(), m = grid[0].size();
+    queue<vector<int>> q;
+    vector<vector<int>> seen(n, vector<int>(m, -1));
+    q.push({0, 0});
+    seen[0][0] = time;
+
+    if (fireTime[0][0] != INT_MAX && time >= fireTime[0][0]) return false;
+
+    while(!q.empty()) {
+        vector<int> curr = q.front(); q.pop();
+        int x = curr[0], y = curr[1];
+        int currTime = seen[x][y];
+
+        for(auto d : dir) {
+            int nx = x + d[0], ny = y + d[1];
+            int nextTime = currTime + 1;
+
+            if(nx >= 0 && nx < n && ny >= 0 && ny < m &&
+               grid[nx][ny] != 2 && seen[nx][ny] == -1) {
+
+                if (nx == n - 1 && ny == m - 1) {
+                    if (fireTime[nx][ny] != INT_MAX && nextTime > fireTime[nx][ny]) continue;
+                    return true;
+                }
+
+                if (fireTime[nx][ny] != INT_MAX && nextTime >= fireTime[nx][ny]) continue;
+
+                seen[nx][ny] = nextTime;
+                q.push({nx, ny});
+            }
+        }
+    }
+
+    return false;
+}
+
+    int maximumMinutes(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        vector<vector<int>> fireTime = fire(grid);
+
+        if (!check(grid, fireTime, 0)) {
+            return -1;
+        }
+        
+        if (fireTime[n-1][m-1] == INT_MAX) {
+            return 1e9;
+        }
+
+        int left = 0, right = n * m;
+        int ans = -1;
+
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            if(check(grid, fireTime, mid)) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return ans >= n * m ? (int)1e9 : ans;
+    }
+};
