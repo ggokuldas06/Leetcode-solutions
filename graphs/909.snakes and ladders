@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n=board.size();
+        vector<pair<int,int>>cells(n*n+1);
+        int label=1;
+        vector<int>column(n);
+        iota(column.begin(),column.end(),0);
+        for(int row=n-1;row>=0;row--){
+            for(int col:column){
+                cells[label++]={row,col};
+            }
+            reverse(column.begin(),column.end());
+        }
+        vector<int>dist(n*n+1,-1);
+        queue<int>queue;
+        dist[1]=0;
+        queue.push(1);
+        while(!queue.empty()){
+            int curr=queue.front();queue.pop();
+            for(int next=curr+1;next<=min(curr+6,n*n);next++){
+                auto [row,column]=cells[next];
+                int destination = board[row][column] != -1 ? board[row][column] : next;
+                if (dist[destination] == -1) {
+                    dist[destination] = dist[curr] + 1;
+                    queue.push(destination);
+                }
+            }
+        }
+        return dist[n*n];
+    }
+};
