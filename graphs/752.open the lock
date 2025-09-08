@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        queue<pair<string,int>>queue;
+        unordered_set<string>seen(deadends.begin(),deadends.end());
+        if(find(seen.begin(),seen.end(),"0000")!=seen.end()) return -1;
+        queue.push({"0000",0});
+        while(!queue.empty()){
+            auto [curr,step]=queue.front();queue.pop();
+            if(curr==target) return step;
+            for(string x:helper(curr)){
+                if(!seen.contains(x)){
+                    queue.push({x,step+1});
+                    seen.insert(x);
+                }
+            }
+        }
+        return -1;
+    }
+    vector<string> helper(string node){
+        vector<string>ans;
+        for(int i=0;i<4;i++){
+            int num=node[i];
+            vector<int>change={1,-1};
+            for(int x:change){
+                char new_c= ((num-'0'+x+10)%10)+'0';
+                string neigh=node;
+                neigh[i]=new_c;
+                ans.push_back(neigh);
+            }
+        }
+        return ans;
+    }
+
+};
