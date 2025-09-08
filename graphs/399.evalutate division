@@ -1,0 +1,38 @@
+class Solution {
+public:
+    unordered_map<string, unordered_map<string,double>> graph;
+
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        for(int i=0; i<equations.size(); i++){
+            string num = equations[i][0], den = equations[i][1];
+            graph[num][den] = values[i];
+            graph[den][num] = 1.0 / values[i];
+        }
+
+        vector<double> ans;
+        for(auto &x : queries){
+            ans.push_back(helper(x[0], x[1]));
+        }
+        return ans;
+    }
+
+    double helper(string start, string end){
+        if(graph.find(start) == graph.end()) return -1.0;
+
+        unordered_set<string> seen({start});
+        stack<pair<string, double>> st;
+        st.push({start, 1.0});
+
+        while(!st.empty()){
+            auto [curr, ratio] = st.top(); st.pop();
+            if(curr == end) return ratio;
+            for(auto &[neighbour, val] : graph[curr]){
+                if(seen.find(neighbour) == seen.end()){
+                    seen.insert(neighbour);
+                    st.push({neighbour, ratio * val});
+                }
+            }
+        }
+        return -1.0;
+    }
+};
