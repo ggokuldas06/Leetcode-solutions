@@ -1,0 +1,65 @@
+class Solution {
+public:
+    vector<vector<int>> graph;
+
+    bool conn(const string &a, const string &b) {
+        int diff = 0;
+        for (int i = 0; i < a.size(); i++) {
+            if (a[i] != b[i]) diff++;
+            if (diff > 1) return false;
+        }
+        return diff == 1;
+    }
+
+    void init(vector<string>& bank) {
+        int n = bank.size();
+        vector<vector<int>> gra(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (conn(bank[i], bank[j])) {
+                    gra[i].push_back(j);
+                    gra[j].push_back(i);
+                }
+            }
+        }
+        this->graph = gra;
+    }
+
+    vector<int> dik(int start_idx, int n) {
+        queue<int> q;
+        vector<bool> seen(n, false);
+        vector<int> ans(n, -1);
+        ans[start_idx] = 0;
+        q.push(start_idx);
+        seen[start_idx] = true;
+
+        while (!q.empty()) {
+            int curr = q.front(); q.pop();
+            for (int nei : graph[curr]) {
+                if (!seen[nei]) {
+                    ans[nei] = ans[curr] + 1;
+                    q.push(nei);
+                    seen[nei] = true;
+                }
+            }
+        }
+        return ans;
+    }
+
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        if (find(bank.begin(), bank.end(), endGene) == bank.end()) return -1;
+
+        bank.push_back(startGene);
+        init(bank);
+        int n = bank.size();
+        int start_idx = n - 1;
+        vector<int> dist = dik(start_idx, n);
+
+        for (int i = 0; i < n; i++) {
+            if (bank[i] == endGene) {
+                return dist[i];
+            }
+        }
+        return -1;
+    }
+};
