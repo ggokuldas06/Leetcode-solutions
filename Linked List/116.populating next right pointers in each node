@@ -1,0 +1,41 @@
+// Definition for a Node.
+// (same as yours)
+
+class Solution {
+public:
+    vector<vector<Node*>> bfs(Node* head) {
+        if (!head)
+            return {};  
+
+        queue<Node*> q;       
+        q.push(head);
+        vector<std::vector<Node*>> ans;
+
+        while (!q.empty()) {
+            int level_size = (int)q.size();
+            vector<Node*> level;
+
+            for (int i = 0; i < level_size; i++) {
+                Node* cur = q.front();   
+                q.pop();
+                level.push_back(cur);
+
+                if (cur->left)  q.push(cur->left);   
+                if (cur->right) q.push(cur->right);
+            }
+            ans.push_back(std::move(level));
+        }
+        return ans;
+    }
+
+    Node* connect(Node* root) {
+        auto levels = bfs(root);
+        for (auto& level : levels) {              
+            int n = (int)level.size();
+            for (int i = 0; i < n; i++) {
+                level[i]->next = (i + 1 < n) ? level[i + 1] : nullptr;
+            }
+        }
+        return root;
+    }
+};
