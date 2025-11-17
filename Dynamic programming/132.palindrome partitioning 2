@@ -1,0 +1,59 @@
+tabulaiton
+class Solution {
+public:
+    int minCut(string s) {
+        int n=s.size();
+        vector<vector<bool>>ispal(n,vector<bool>(n,false));
+        vector<int>dp(n,0);
+        ispal[0][0]=true;
+        for(int i=0;i<n;i++){
+            dp[i]=i;
+            for(int j=0;j<=i;j++){
+                if(s[i]==s[j]&&(i-j+1<=2 || ispal[j+1][i-1])){
+                    ispal[j][i]=true;
+                    dp[i] = (j == 0) ? 0 : min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[n-1];
+    }
+};
+
+
+memoization
+class Solution {
+public:
+    vector<int>memo;
+    int dp(int index,string& s,int n){
+        if(index==n)return 0;
+        if(memo[index]!=INT_MAX) return memo[index];
+        string temp="";
+        int mincost=INT_MAX;
+        for(int i=index;i<n;i++){
+            temp+=s[i];
+            if(ispal(temp)){
+              int cost = (i == n-1) ? 0 : 1 + dp(i+1, s, n);
+                mincost=min(cost,mincost);
+            }
+        }
+        memo[index]=mincost;
+        return mincost;
+    }
+    bool ispal(string& s){
+        int l=0,r=s.size()-1;
+        while(l<r){
+            if(s[l]!=s[r]){
+                return false;
+            }else{
+                l++;
+                r--;
+            }
+        }
+        return true;
+    }
+    int minCut(string s) {
+        vector<int>temp(s.size(),INT_MAX);
+        this->memo=temp;
+        return dp(0,s,s.size());
+    }
+};
