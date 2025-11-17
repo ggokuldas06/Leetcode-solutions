@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> hash;
+        int maxlen = 0;                     
+        for (string& t : wordDict) {
+            hash.insert(t);
+            maxlen = max(maxlen, (int)t.size());
+        }
+        int n = s.size();                   
+        vector<bool> dp(n + 1, false);
+        dp[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = i - 1; j >= max(0, i - maxlen); j--) {
+                if (dp[j] && hash.find(s.substr(j, i - j)) != hash.end()) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+
