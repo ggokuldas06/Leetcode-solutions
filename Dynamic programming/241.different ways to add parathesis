@@ -1,0 +1,44 @@
+class Solution {
+public:
+    unordered_map<string,vector<int>>memo;
+    bool op(char c){
+        if(c=='+'||c=='-'||c=='*') return true;
+        return false;
+    }
+    int operate(int x,int y,char op){
+        if(op=='+'){
+            return x+y;
+        }else if(op=='-'){
+            return x-y;
+        }else{
+            return x*y;
+        }
+    }
+    void perform(vector<int>& nums1,vector<int>& nums2,vector<int>& res,char op){
+        for(int x:nums1){
+            for(int y:nums2){
+                res.push_back(operate(x,y,op));
+            }
+        }
+    }
+    vector<int> backtrack(int left,int right,string& exp){
+        string key = exp.substr(left,right-left+1);
+        if(memo.count(key)) return memo[key];
+        vector<int> res={};
+        for(int i=left;i<=right;i++){
+            if(op(exp[i])){
+                vector<int> nums1=backtrack(left,i-1,exp);
+                vector<int> nums2=backtrack(i+1,right,exp);
+                perform(nums1,nums2,res,exp[i]);
+            }
+        }
+        if(res.empty()){
+            res.push_back(stoi(exp.substr(left,right-left+1)));
+        }
+        memo[key]=res;
+        return res;
+    }
+    vector<int> diffWaysToCompute(string expression) {
+        return backtrack(0,expression.size()-1,expression);
+    }
+};
