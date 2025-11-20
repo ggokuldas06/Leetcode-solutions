@@ -1,0 +1,39 @@
+// class Solution {
+// public:
+//     int nthUglyNumber(int n) {
+//         priority_queue<long long, vector<long long>, greater<long long>> heap;
+//         unordered_set<long long> seen;  
+//         heap.push(1);
+//         seen.insert(1);                 
+//         while(!heap.empty()){
+//             long long curr = heap.top(); heap.pop();
+//             if(--n == 0) return curr;
+//             long long a = curr * 2;
+//             long long b = curr * 3;
+//             long long c = curr * 5;
+//             if(!seen.count(a)){ heap.push(a); seen.insert(a); }
+//             if(!seen.count(b)){ heap.push(b); seen.insert(b); }
+//             if(!seen.count(c)){ heap.push(c); seen.insert(c); }
+//         }
+//         return -1;
+//     }
+// };
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int>dp(n+1,0);
+        int i2=0,i3=0,i5=0;
+        dp[0]=1;
+        for(int i=1;i<=n;i++){
+            int next2=dp[i2]*2;
+            int next3=dp[i3]*3;
+            int next5=dp[i5]*5;
+            int nextug=min({next2,next3,next5});
+            if(nextug==next2){i2++;}
+            if(nextug==next3){i3++;}
+            if(nextug==next5){i5++;}
+            dp[i]=nextug;
+        }
+        return dp[n-1];
+    }
+};
