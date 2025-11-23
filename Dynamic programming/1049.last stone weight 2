@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<vector<int>> dpt;
+    int dp(int i, int total, int total_sum, int target, int n, vector<int>& stones) {
+        if (total >= target || i == n) {
+            return abs(total - (total_sum - total));
+        }
+        if (dpt[i][total] != INT_MAX) return dpt[i][total];
+        int take    = dp(i + 1, total + stones[i], total_sum, target, n, stones);
+        int nottake = dp(i + 1, total,               total_sum, target, n, stones);
+        int ans = min(take, nottake);
+        dpt[i][total] = ans;      
+        return ans;
+    }
+
+    int lastStoneWeightII(vector<int>& stones) {
+        int n = stones.size();
+        int total_sum = 0;
+        for (int x : stones) total_sum += x;
+        int target = total_sum / 2;
+        dpt.assign(n, vector<int>(target + 1, INT_MAX));
+        return dp(0, 0, total_sum, target, n, stones);
+    }
+};
