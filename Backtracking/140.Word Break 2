@@ -1,0 +1,38 @@
+class Solution {
+public:
+    unordered_set<string>hash;
+    int maxlen=0;
+    vector<string>ans;
+    void isword(int left,int right, string& s,vector<string>&curr){
+        if(left==right){
+            string sentence;
+            for (int i = 0; i < (int)curr.size(); ++i) {
+                if (i) sentence.push_back(' ');
+                sentence += curr[i];
+            }
+            ans.push_back(sentence);
+            return;
+        }
+        for(int len=1;len<=maxlen && len+left<=right;len++){
+            string word=s.substr(left,len);
+            if(hash.find(word)!=hash.end()){
+                curr.push_back(word);
+                isword(len+left,right,s,curr);
+                curr.pop_back();
+            }
+        }
+    }
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        hash.clear();
+        ans.clear();
+        maxlen=0;
+        for(string& c:wordDict){
+            hash.insert(c);
+            this->maxlen=max(maxlen,(int)c.size());
+        }
+        vector<string>curr={};
+        int n=s.size();
+        isword(0,n,s,curr);
+        return ans;
+    }
+};
