@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<vector<int>>>memo;
+    int maxmove;
+    const int MOD = 1000000007;
+    int dp(int r,int c,int m,int n,int move){
+        if (r < 0 || r >= m || c < 0 || c >= n) return 1;
+        if (move > maxmove) return 0;
+        if (memo[r][c][move] != -1) return memo[r][c][move];
+        if (move == maxmove) {
+            memo[r][c][move] = 0;
+            return 0;
+        }
+        long long res=0;
+        res+=dp(r+1,c,m,n,move+1);
+        res+=dp(r-1,c,m,n,move+1);
+        res+=dp(r,c+1,m,n,move+1);
+        res+=dp(r,c-1,m,n,move+1);
+        res%=MOD;
+        memo[r][c][move]=(int)res;
+        return memo[r][c][move];
+    }
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        this->maxmove = maxMove;
+        memo.assign(m, vector<vector<int>>(n, vector<int>(maxMove + 1, -1)));
+        return dp(startRow, startColumn, m, n, 0);
+    }
+};
