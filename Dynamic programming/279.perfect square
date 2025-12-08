@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int>memo;
+    int dp(int n){
+        if(n==0)return 0;
+        int &res=memo[n];
+        if(res!=-1)return res;
+        res=INT_MAX;
+        for(int i=1;i*i<=n;i++){
+            int square=i*i;
+            res=min(res,1+dp(n-square));
+        }
+        return res;
+    }
+    int numSquares(int n) {
+        vector<int>memo(n+1,-1);
+        this->memo=memo;
+        return dp(n);
+    }
+};
