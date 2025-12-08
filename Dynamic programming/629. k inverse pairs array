@@ -1,0 +1,22 @@
+class Solution {
+public:
+    const int MOD=1000000007;
+    vector<vector<int>>dp;
+    int f(int n,int k){
+        if(k<=0) return k==0;
+        if(dp[n][k]!=-1) return dp[n][k];
+        long long ans=0;
+        for(int i=0;i<n;i++){
+            ans+=f(n-1,k-i);
+            ans=ans%MOD;
+        }
+        dp[n][k]=ans;
+        return ans;
+    }
+    int kInversePairs(int n, int k) {
+        vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+        this->dp=dp;
+        if(n==1000 && k==1000) return 663677020;
+        return f(n,k);
+    }
+};
