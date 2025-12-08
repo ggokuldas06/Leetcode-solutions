@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>>memo;
+    bool dp(vector<int>& nums,int target,int curr){
+        if(target==0)return true;
+        if(curr==nums.size() || target<0)return false;
+        if(memo[curr][target]!=-1)return memo[curr][target];
+        int take=dp(nums,target-nums[curr],curr+1);
+        int skip=dp(nums,target,curr+1);
+        memo[curr][target]=(take||skip);
+        return memo[curr][target];
+    }
+    bool canPartition(vector<int>& nums) {
+       int total=0;
+       for(int x:nums)total+=x;
+       if(total%2!=0)return false;
+       int target=total/2;
+       vector<vector<int>>memo(nums.size(),vector<int>(target+1,-1));
+       this->memo=memo;
+       return dp(nums,target,0);
+    }
+};
