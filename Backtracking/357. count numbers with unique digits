@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int count = 0;
+
+    void backtrack(int n, int len, vector<bool>& used) {
+        count++;
+        if (len == n) return;
+        for (int i = 0; i <= 9; i++) {
+            if (used[i]) continue;    
+            if (len == 0 && i == 0) continue;
+            used[i] = true;
+            backtrack(n, len + 1, used);
+            used[i] = false;
+        }
+    }
+
+    int countNumbersWithUniqueDigits(int n) {
+        vector<bool> used(10, false);
+        backtrack(n, 0, used);
+        return count;
+    }
+};
