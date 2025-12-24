@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int ans;
+    bool check(vector<int>& weight, int days, int wei){
+    int curr = 0;
+    int days_curr = 1;   
+    for(int x : weight){
+        if(curr + x > wei){
+            days_curr++;
+            curr = x;
+        } else {
+            curr += x;
+        }
+    }
+    return days_curr <= days;
+}
+
+    void binary(vector<int>& weights, int days, int right,int left){
+    while(left <= right){
+        int mid = left + (right - left) / 2;
+        if(check(weights, days, mid)){
+            ans = mid;
+            right = mid - 1;   
+        } else {
+            left = mid + 1;
+        }
+    }
+}
+
+    int shipWithinDays(vector<int>& weights, int days) {
+        int sum=0;
+        int left=INT_MIN;
+        for(int x:weights){
+            left=max(left,x);
+            sum+=x;
+        }
+        this->ans=sum;
+        binary(weights,days,sum,left);
+        return ans;
+    }
+};
