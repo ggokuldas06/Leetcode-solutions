@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int numEnclaves(vector<vector<int>>& grid) {
+        int m=grid.size();
+        int n=grid[0].size();
+        int total=0;
+        queue<pair<int,int>>q;
+        for(int i=0;i<m;i++){
+            if (grid[i][0] == 1)   { q.push({i, 0}); grid[i][0] = 0; }
+            if (grid[i][n-1] == 1) { q.push({i, n-1}); grid[i][n-1] = 0; }
+        }
+        for(int j=0;j<n;j++){
+            if (grid[0][j] == 1) { q.push({0, j}); grid[0][j] = 0; }
+            if (grid[m-1][j] == 1) { q.push({m-1, j}); grid[m-1][j] = 0; }
+        }
+        vector<int> dir = {0, 1, 0, -1, 0};
+        while(!q.empty()){
+            auto [x, y] = q.front();
+            q.pop();
+
+            for (int k = 0; k < 4; k++) {
+                int nx = x + dir[k];
+                int ny = y + dir[k+1];
+
+                if (nx >= 0 && ny >= 0 && nx < m && ny < n && grid[nx][ny] == 1) {
+                    grid[nx][ny] = 0;
+                    q.push({nx, ny});
+                }
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                if (grid[i][j] == 1)
+                    count++;
+
+        return count;
+    }
+};
