@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<vector<int>> graph(n+1, vector<int>(n+1, -1));
+
+        for (auto &curr : times) {
+            int x = curr[0];
+            int y = curr[1];
+            int w = curr[2];
+            graph[x][y] = w;          
+        }
+
+        vector<int> dist(n+1, INT_MAX);
+        dist[k] = 0;
+
+        vector<bool> seen(n+1, false);
+
+        priority_queue<
+            pair<int,int>,
+            vector<pair<int,int>>,
+            greater<pair<int,int>>
+        > anan;
+
+        anan.push({0, k});
+
+        while (!anan.empty()) {
+            auto [d, node] = anan.top();
+            anan.pop();
+
+            if (seen[node]) continue;
+            seen[node] = true;
+
+            for (int v = 1; v <= n; v++) {
+                if (graph[node][v] != -1) {
+                    if (dist[v] > d + graph[node][v]) {
+                        dist[v] = d + graph[node][v];
+                        anan.push({dist[v], v});
+                    }
+                }
+            }
+        }
+
+        int ans = 0;
+        for (int i = 1; i <= n; i++) {
+            if (dist[i] == INT_MAX) return -1;
+            ans = max(ans, dist[i]);
+        }
+
+        return ans;
+    }
+};
