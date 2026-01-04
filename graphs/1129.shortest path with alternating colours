@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int> shortestAlternatingPaths(int n,
+                                         vector<vector<int>>& redEdges,
+                                         vector<vector<int>>& blueEdges) {
+        vector<vector<int>> red(n), blue(n);
+
+        for (auto &e : redEdges) red[e[0]].push_back(e[1]);
+        for (auto &e : blueEdges) blue[e[0]].push_back(e[1]);
+
+        vector<int> ans(n, -1);
+        vector<vector<bool>> seen(n, vector<bool>(2, false));
+
+        queue<vector<int>> q;   
+        q.push({0, -1, 0});
+
+        seen[0][0] = seen[0][1] = true;
+        ans[0] = 0;
+
+        while (!q.empty()) {
+            auto curr = q.front();
+            q.pop();
+
+            int node = curr[0];
+            int last = curr[1];
+            int dist = curr[2];
+
+ 
+            if (last != 1) {
+                for (int v : blue[node]) {
+                    if (!seen[v][1]) {
+                        seen[v][1] = true;
+                        if (ans[v] == -1) ans[v] = dist + 1;
+                        q.push({v, 1, dist + 1});
+                    }
+                }
+            }
+
+
+            if (last != 0) {
+                for (int v : red[node]) {
+                    if (!seen[v][0]) {
+                        seen[v][0] = true;
+                        if (ans[v] == -1) ans[v] = dist + 1;
+                        q.push({v, 0, dist + 1});
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+};
