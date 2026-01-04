@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> gardenNoAdj(int n, vector<vector<int>>& paths) {
+        vector<vector<bool>> graph(n, vector<bool>(n, false));
+
+        for (vector<int>& x : paths) {
+            int xi = x[0] - 1;
+            int yi = x[1] - 1;
+            graph[xi][yi] = true;
+            graph[yi][xi] = true;
+        }
+
+        vector<int> ans(n, 0);
+
+        for (int i = 0; i < n; i++) {
+            vector<bool> used(5, false);   
+            for (int j = 0; j < n; j++) {
+                if (graph[i][j] && ans[j] != 0)
+                    used[ans[j]] = true;
+            }
+
+            for (int c = 1; c <= 4; c++) {
+                if (!used[c]) {
+                    ans[i] = c;
+                    break;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
