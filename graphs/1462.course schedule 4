@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool dfs(int start,int end,vector<vector<int>>& graph,int n){
+        vector<bool>seen(n,false);
+        stack<int>s;
+        s.push(start);
+        while(!s.empty()){
+            int curr=s.top();
+            s.pop();
+            seen[curr]=true;
+            if(curr==end) return true;
+            for(int i=0;i<n;i++){
+                if(!seen[i] && graph[curr][i]){
+                    s.push(i);
+                }
+            }
+        }
+        return false;
+    }
+    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& arr, vector<vector<int>>& queries) {
+        int m=queries.size();
+        vector<bool>ans(m,false);
+        vector<vector<int>>graph(n,vector<int>(n,0));
+        for(vector<int>& temp:arr){
+            graph[temp[0]][temp[1]]=1;
+        }
+        for(int i=0;i<m;i++){
+            ans[i]=dfs(queries[i][0],queries[i][1],graph,n);
+        }
+        return ans;
+    }
+};
