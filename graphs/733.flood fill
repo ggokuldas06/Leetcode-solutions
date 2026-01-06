@@ -1,0 +1,42 @@
+class Solution {
+public:
+    bool check(int x,int y,int m,int n){
+        if(x<0 || y<0) return false;
+        if(x>=m || y>=n) return false;
+        return true;
+    }
+
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+
+        int m = image.size();
+        int n = image[0].size();
+        int start = image[sr][sc];
+
+        if (start == color) return image;
+
+        queue<pair<int,int>> q;
+        q.push({sr, sc});
+
+        vector<vector<int>> dirs={{1,0},{0,1},{-1,0},{0,-1}};
+
+        while(!q.empty()){
+            auto [xi, yi] = q.front();
+            q.pop();
+
+            image[xi][yi] = color;
+
+            for(auto &dir : dirs){
+                int temp_x = xi + dir[0];
+                int temp_y = yi + dir[1];
+
+                if(check(temp_x,temp_y,m,n) &&
+                   image[temp_x][temp_y] == start)
+                {
+                    q.push({temp_x,temp_y});
+                }
+            }
+        }
+
+        return image;
+    }
+};
