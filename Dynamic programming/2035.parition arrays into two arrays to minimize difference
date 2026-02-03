@@ -1,0 +1,53 @@
+class Solution {
+public:
+    void generateSubsets(
+        int idx,
+        int count,
+        int sum,
+        vector<int>& arr,
+        vector<vector<int>>& sums
+    ) {
+        if (idx == arr.size()) {
+            sums[count].push_back(sum);
+            return;
+        }
+
+        generateSubsets(idx + 1, count, sum, arr, sums);
+        generateSubsets(idx + 1, count + 1, sum + arr[idx], arr, sums);
+    }
+
+    int minimumDifference(vector<int>& nums) {
+        int n = nums.size() / 2;
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+
+        vector<int> left(nums.begin(), nums.begin() + n);
+        vector<int> right(nums.begin() + n, nums.end());
+
+        vector<vector<int>> leftSums(n + 1), rightSums(n + 1);
+        generateSubsets(0, 0, 0, left, leftSums);
+        generateSubsets(0, 0, 0, right, rightSums);
+
+        for (int i = 0; i <= n; i++) {
+            sort(rightSums[i].begin(), rightSums[i].end());
+        }
+
+        int ans = INT_MAX;
+
+        for (int k = 0; k <= n; k++) {
+            for (int leftSum : leftSums[k]) {
+                int target = totalSum / 2 - leftSum;
+                auto& R = rightSums[n - k];
+
+                auto it = lower_bound(R.begin(), R.end(), target);
+                if (it != R.end())
+                    ans = min(ans, abs(totalSum - 2 * (leftSum + *it)));
+                if (it != R.begin()) {
+                    --it;
+                    ans = min(ans, abs(totalSum - 2 * (leftSum + *it)));
+                }
+            }
+        }
+
+        return ans;
+    }
+};
