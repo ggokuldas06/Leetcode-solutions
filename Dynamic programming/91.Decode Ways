@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int help(int idx,string& s,vector<int>& dp){
+        if(idx==s.size()){
+            return 1;
+        }
+        if(s[idx]=='0'){
+            return 0;
+        }
+        if(dp[idx]!=-1){
+            return dp[idx];
+        }
+        int ways=help(idx+1,s,dp);
+        if(idx+1<s.size()){
+            int num=10*(s[idx]-'0')+(s[idx+1]-'0');
+            if(num>=10 && num<=26){
+                ways+=help(idx+2,s,dp);
+            }
+        }
+        dp[idx]=ways;
+        return ways;
+    }
+    int numDecodings(string s) {
+        int n=s.size();
+        vector<int>dp(n,-1);
+        return help(0,s,dp);
+    }
+};
