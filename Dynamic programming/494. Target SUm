@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int target;
+    int offset;
+    vector<vector<int>>memo;
+    int dfs(int i,int sum,vector<int>& nums){
+        if(i==nums.size()){
+            if(sum==target){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        if(memo[i][sum+offset]!=-1)return memo[i][sum+offset];
+        int add=dfs(i+1,sum+nums[i],nums);
+        int sub=dfs(i+1,sum-nums[i],nums);
+        memo[i][sum+offset]=add+sub;
+        return add+sub;
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        this->target=target;
+        int off=0;
+        for(int x:nums)off+=x;
+        this->offset=off;
+        memo.assign(nums.size(), vector<int>(2 * off + 1, -1));
+        return dfs(0,0,nums);
+    }
+};
