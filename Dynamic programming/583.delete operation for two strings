@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int lcs(string& a,string& b){
+        int n=a.size();
+        int m=b.size();
+        vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                if(a[i]==b[j]){
+                    dp[i][j]=1+dp[i+1][j+1];
+                }else{
+                    dp[i][j]=max(dp[i+1][j],dp[i][j+1]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+    int minDistance(string word1, string word2) {
+        int an=word1.size();
+        int bn=word2.size();
+        int x=lcs(word1,word2);
+        return (an - x) + (bn - x);
+    }
+};
