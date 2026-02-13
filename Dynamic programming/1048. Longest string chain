@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool check(string& longer,string& shorter){
+        if(longer.size() !=shorter.size()+1)return false;
+        int n=longer.size();
+        int m=shorter.size();
+        bool skipped=false;
+
+        int i=0,j=0;
+        while(i<longer.size()){
+            if(longer[i]==shorter[j]){
+                i++;
+                j++;
+            }else{
+                if(skipped)return false;
+                i++;
+                skipped=true;
+            }
+        }
+        return true;
+    }
+    int longestStrChain(vector<string>& words) {
+        int n=words.size();
+        vector<int>dp(n,1);
+        int ans=1;
+        sort(words.begin(),words.end(),
+            [](string& a,string& b){
+                return a.size()<b.size();
+            });
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(check(words[i],words[j]) && dp[i]<dp[j]+1){
+                    dp[i]=dp[j]+1;
+                    ans=max(ans,dp[i]);
+                }
+            }
+        }
+        return ans;
+    }
+};
