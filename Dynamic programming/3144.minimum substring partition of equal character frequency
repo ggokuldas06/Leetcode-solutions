@@ -1,0 +1,31 @@
+class Solution {
+public:
+    
+    int helper(string& s, vector<int>& dp, int start){
+        int n = s.size();
+        vector<int>hash(26,0);
+        if(start == n) return 0;
+        if(dp[start] != -1) return dp[start];
+        int dis=0;
+        int ans = INT_MAX;
+        int maxlen=0;
+        for(int end=start;end<n;end++){
+            int idx=s[end]-'a';
+            if(hash[idx]==0)dis++;
+            hash[idx]++;
+            maxlen=max(maxlen,hash[idx]);
+            if(maxlen*dis==end-start+1){
+                ans=min(ans, 1 + helper(s, dp, end + 1));
+            }
+        }
+
+        dp[start] = ans;
+        return dp[start];
+    }
+
+    int minimumSubstringsInPartition(string s) {
+        int n = s.size();
+        vector<int> dp(n, -1);
+        return helper(s, dp, 0);
+    }
+};
