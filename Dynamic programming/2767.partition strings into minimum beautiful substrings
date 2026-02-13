@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool check(string& s){
+        if(s[0]=='0')return false;
+        int val=0;
+        int exp=0;
+        int n=s.size();
+        for(int i=n-1;i>=0;i--){
+            if(s[i]=='1'){
+                val+=(1<<exp);
+            }exp++;
+        }
+        while(val>1 && val%5==0){
+            val/=5;
+        }
+        return val==1;
+    }
+    int helper(string& s,vector<int>& dp,int start){
+        int n=s.size();
+        if(start==s.size())return 0;
+        if(dp[start]!=-1)return dp[start];
+        int ans=INT_MAX;
+        for(int len = 1; start + len <= n; len++){
+            string x = s.substr(start, len);
+
+            if(check(x)){
+                int next = helper(s, dp, start + len);
+                if(next != -1)
+                    ans = min(ans, 1 + next);
+            }
+        }
+        dp[start]= (ans==INT_MAX?-1:ans);
+        return dp[start];
+    }
+    int minimumBeautifulSubstrings(string s) {
+        int n=s.size();
+        vector<int>dp(n,-1);
+        return helper(s,dp,0);
+    }
+};
