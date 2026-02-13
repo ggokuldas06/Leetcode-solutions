@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int helper(vector<int>& nums, int k, vector<int>& memo, int start) {
+        int n = nums.size();
+        if(start == n) return 0;
+        if(memo[start] != -1) return memo[start];
+        int maxsum = 0;
+        int maxelem = 0;
+        for(int len = 1; len <= k && start + len <= n; len++) {
+            maxelem = max(maxelem, nums[start + len - 1]);
+            int curr = maxelem * len + 
+                       helper(nums, k, memo, start + len);
+            maxsum = max(maxsum, curr);
+        }
+        return memo[start] = maxsum;
+    }
+
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        vector<int> memo(arr.size(), -1);
+        return helper(arr, k, memo, 0);
+    }
+};
+
