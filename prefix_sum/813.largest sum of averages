@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<double>> memo;
+    int n;
+    double dfs(vector<double>& prefix, int j, int k) {
+        if (k == 1) {
+            return (prefix[n] - prefix[j]) / (n - j);
+        }
+        if (memo[j][k] >= 0)
+            return memo[j][k];
+        double best = 0;
+        for (int i = j; i <= n - k; i++) {
+            double avg = (prefix[i + 1] - prefix[j]) / (i - j + 1);
+            best = max(best, avg + dfs(prefix, i + 1, k - 1));
+        }
+        return memo[j][k] = best;
+    }
+
+    double largestSumOfAverages(vector<int>& nums, int k) {
+        n = nums.size();
+        vector<double> prefix(n + 1, 0);
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+        memo.assign(n, vector<double>(k + 1, -1));
+        return dfs(prefix, 0, k);
+    }
+};
