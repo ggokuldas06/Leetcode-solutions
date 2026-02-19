@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        if(source==target)return 0;
+        int n=routes.size();
+        unordered_map<int,vector<int>>hash;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<routes[i].size();j++){
+                hash[routes[i][j]].push_back(i);
+            }
+        }
+        unordered_set<int>vbus;
+        unordered_set<int>vstop;
+        queue<pair<int,int>>q;
+        vstop.insert(source);
+        q.push({source,0});
+        while(!q.empty()){
+            auto [currstp,cnt]=q.front();
+            q.pop();
+            if(currstp==target) return cnt;
+            for(int bus:hash[currstp]){
+                if(vbus.count(bus))continue;
+                vbus.insert(bus);
+                for(int stop:routes[bus]){
+                    if(!vstop.count(stop)){
+                        vstop.insert(stop);
+                        q.push({stop,cnt+1});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
