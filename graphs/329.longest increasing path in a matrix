@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>>memo;
+    int helper(int i,int j,vector<vector<int>>& matrix){
+        if(memo[i][j]!=-1) return memo[i][j];
+        int ans=1;
+        int dir[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
+        for(int k=0;k<4;k++){
+            int ni=i+dir[k][0];
+            int nj=j+dir[k][1];
+            if(ni>=0 && nj>=0 && ni<matrix.size() && nj<matrix[0].size() && matrix[ni][nj]>matrix[i][j]){
+                ans=max(ans,1+helper(ni,nj,matrix));
+            }
+        }
+        memo[i][j]=ans;
+        return ans;
+
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        vector<vector<int>>memo(n,vector<int>(m,-1));
+        this->memo=memo;
+        int ans=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ans=max(ans,helper(i,j,matrix));
+            }
+        }
+        return ans;
+    }
+};
