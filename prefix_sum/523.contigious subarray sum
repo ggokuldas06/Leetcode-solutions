@@ -10,8 +10,9 @@ public:
             int rem=curr%k;
             if(hash.count(rem)){
                 if(i-hash[rem]>=2)return true;
+            }else{
+                hash[rem]=i;
             }
-            hash[curr]++;
         }
         return false;
     }
