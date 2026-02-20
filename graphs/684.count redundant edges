@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int find(int x,vector<int>& parent){
+        if(x!=parent[x]){
+            parent[x]=find(parent[x],parent);
+        }
+        return parent[x];
+    }
+    bool unite(int x,int y,vector<int>& parent,vector<int>& rank){
+        int rx=find(x,parent);
+        int ry=find(y,parent);
+        if(rx==ry)return false;
+        if(rank[rx]<rank[ry]){
+            parent[rx]=ry;
+        }else if(rank[rx]>rank[ry]){
+            parent[ry]=rx;
+        }else{
+            parent[ry]=rx;
+            rank[rx]++;
+        }
+        return true;
+    }
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        int n=edges.size();
+        vector<int> parent(n+1,0);
+        vector<int> rank(n+1,0);
+        for(int i=0;i<=n;i++){
+            parent[i]=i;
+        }
+        for(auto& edge:edges){
+            if(!unite(edge[0],edge[1],parent,rank)){
+                return edge;
+            }
+        }
+        return {};
+    }
+};
