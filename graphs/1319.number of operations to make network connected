@@ -1,0 +1,47 @@
+******************
+DSU
+******************
+
+
+class Solution {
+public:
+    int find(int x,vector<int>& parent){
+        if(parent[x]!=x){
+            parent[x]=find(parent[x],parent);
+        }
+        return parent[x];
+
+    }
+    void unite(int x,int y,vector<int>& parent,vector<int>& rank){
+        int rootx=find(x,parent);
+        int rooty=find(y,parent);
+        if(rootx==rooty)return;
+        if(rank[rootx]<rank[rooty]){
+            parent[rootx]=rooty;
+        }else if(rank[rootx]>rank[rooty]){
+            parent[rooty]=rootx;
+        }else{
+            parent[rootx]=rooty;
+            rank[rooty]++;
+        }
+    }
+    int makeConnected(int n, vector<vector<int>>& conn) {
+        if(conn.size() < n-1)return -1;
+        vector<int>parent(n);
+        vector<int>rank(n,0);
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+        }
+        
+        for (auto &cons : conn) {
+            unite(cons[0], cons[1],parent,rank);
+        }
+        int comp=0;
+        for(int i=0;i<n;i++){
+            if(parent[i]==i){
+                comp++;
+            }
+        }
+        return comp-1;
+    }
+};
