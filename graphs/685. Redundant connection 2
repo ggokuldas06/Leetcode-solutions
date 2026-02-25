@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int find(int x,vector<int>& parent){
+        if(x!=parent[x]){
+            parent[x]=find(parent[x],parent);
+        }
+        return parent[x];
+    }
+    bool unite(int x,int y,vector<int>& parent,vector<int>& rank){
+        int rootx=find(x,parent);
+        int rooty=find(y,parent);
+        if(rootx==rooty) return false;
+        if(rank[rootx]>rank[rooty]){
+            parent[rooty]=rootx;
+        }else if(rank[rootx]<rank[rooty]){
+            parent[rootx]=rooty;
+        }else{
+            parent[rootx]=rooty;
+            rank[rooty]++;
+        }
+        return true;
+    }
+    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
+        int n=edges.size();
+        vector<int>parent(n+1);
+        vector<int>c1,c2;
+        //check for two parents for the same node
+        for(auto &e:edges){
+            int u=e[0],v=e[1];
+            if(parent[v]==0){
+                parent[v]=u;
+            }else{
+                c1={parent[v],v};
+                c2={u,v};
+                e[1]=0;
+            }
+        }
+
+        vector<int>rank(n+1,0);
+        for(int i=1;i<=n;i++){
+            parent[i]=i;
+        }
+
+        //check for cycle
+        for(auto &e:edges){
+            int u = e[0], v = e[1];
+            if (v == 0) continue;
+            if(!unite(u,v,parent,rank)){
+                if(c1.empty())return e;
+                return c1;
+            }
+        }
+        return c2;
+    }
+};
