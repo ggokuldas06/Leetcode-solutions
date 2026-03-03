@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int dfs(vector<vector<int>>& graph,vector<bool>& visited, int i){
+        stack<int>s;
+        int n=graph.size();
+        s.push(i);
+        int ans=0;
+        while(!s.empty()){
+            int x=s.top();
+            s.pop();
+            if(visited[x])continue;
+            ans++;
+            visited[x]=true;
+            for(int y:graph[x]){
+                if(!visited[y]){
+                    s.push(y);
+                }
+            }
+        }
+        return ans;
+    }
+    int minSwapsCouples(vector<int>& row) {
+        int n=row.size()/2;
+        vector<vector<int>>graph(n);
+        for(int i=0;i<row.size();i+=2){
+            int c1=row[i]/2;
+            int c2=row[i+1]/2;
+            if(c1!=c2){
+                graph[c1].push_back(c2);
+                graph[c2].push_back(c1);
+            }
+        }
+        int ans=0;
+        vector<bool>visited(n,false);
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                int size=0;
+                size+=dfs(graph,visited,i);
+                ans+=(size-1);
+
+            }
+        }
+        return ans;
+    }
+};
