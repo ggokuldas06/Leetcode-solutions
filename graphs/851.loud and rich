@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {
+        int n=quiet.size();
+        vector<vector<int>>graph(n);
+        for(auto &x:richer){
+            int a=x[0];
+            int b=x[1];
+            graph[b].push_back(a);
+        }
+        vector<int>ans(n);
+        for(int i=0;i<n;i++){
+            vector<bool>visited(n,false);
+            queue<int>q;
+            q.push(i);
+            int sol=i;
+            while(!q.empty()){
+                int curr=q.front();
+                q.pop();
+                visited[curr]=true;
+                if(quiet[curr]<quiet[sol]){
+                    sol=curr;
+                }
+                for(int next:graph[curr]){
+                    if(!visited[next]){
+                        q.push(next);
+
+                    }
+                }
+            }
+            ans[i]=sol;
+        }
+        return ans;
+    }
+};
