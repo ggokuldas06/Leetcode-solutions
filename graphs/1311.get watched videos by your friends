@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<string> watchedVideosByFriends(vector<vector<string>>& watchedVideos, vector<vector<int>>& friends, int id, int level) {
+        int n=friends.size();
+        vector<int>visited(n,0);
+        queue<int>q;
+        q.push(id);
+        visited[id]=1;
+        int curr=0;
+        while(!q.empty() && curr<level){
+            int sz=q.size();
+            while(sz--){
+                int u = q.front();
+                q.pop();
+
+                for(int v : friends[u]){
+                    if(!visited[v]){
+                        visited[v] = 1;
+                        q.push(v);
+                    }
+                }
+            }
+            curr++;
+        }
+        map<string,int>hash;
+        while(!q.empty()){
+            int persona=q.front();
+            q.pop();
+            for(string &video : watchedVideos[persona]){
+                hash[video]++;
+            }
+        }
+        vector<pair<string,int>> arr(hash.begin(), hash.end());
+
+        sort(arr.begin(), arr.end(), [](auto &a, auto &b){
+            if(a.second == b.second)
+                return a.first < b.first;
+            return a.second < b.second;
+        });
+
+        vector<string> ans;
+
+        for(auto &p : arr)
+            ans.push_back(p.first);
+
+        return ans;
+    }
+};
