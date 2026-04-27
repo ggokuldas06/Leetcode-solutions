@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxSubstrings(string word) {
+        int n=word.size();
+        vector<pair<int,int>>inter;
+        for(int i=0;i<n;i++){
+            for(int j=i+3;j<n;j++){
+                if(word[i]==word[j]){
+                    inter.push_back({i,j});
+                    break;
+                }
+            }
+        }
+        sort(inter.begin(),inter.end(), [](auto &a, auto &b){
+            return a.second<b.second;
+        });
+        int m=inter.size();
+        vector<int>ends;
+        vector<int>dp(m,0);
+        for(int i=0;i<m;i++){
+            ends.push_back(inter[i].second);
+        }
+        for(int i=0;i<m;i++){
+            int take=1;
+            int left=0,right=i-1,idx=-1;
+            while(left<=right){
+                int mid=left+(right-left)/2;
+                if(inter[mid].second<inter[i].first){
+                    idx=mid;
+                    left=mid+1;
+                }else{
+                    right=mid-1;
+                }
+            }
+            if(idx!=-1)take+=dp[idx];
+            int skip=(i==0?0:dp[i-1]);
+            dp[i]=max(skip,take);
+        }
+        if(m==0)return 0;
+        return dp[m-1];
+    }
+};
