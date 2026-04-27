@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<vector<int>>>memo;
+    int dp(vector<int>& nums, int i,int k, int op1, int op2){
+        if(i==nums.size())return 0;
+        if(memo[i][op1][op2]!=-1){
+            return memo[i][op1][op2];
+        }
+        int res=INT_MAX;
+        res=min(res,nums[i]+dp(nums,i+1,k,op1,op2));
+        if(op1>0){
+            int val=(nums[i]+1)/2;
+            res=min(res,val+dp(nums,i+1,k,op1-1,op2));
+        }
+        if(op2>0 && nums[i]>=k){
+            int val=nums[i]-k;
+            res=min(res,val+dp(nums,i+1,k,op1,op2-1));
+        }
+        if(op1>0 && op2>0){
+            int val=(nums[i]+1)/2;
+            if(val>=k){
+                val-=k;
+                res=min(res,val+dp(nums,i+1,k,op1-1,op2-1));
+            }
+        }
+        if(op1>0 && op2>0 && nums[i]>=k){
+            int val=nums[i]-k;
+            val=(val+1)/2;
+            res=min(res,val+dp(nums,i+1,k,op1-1,op2-1));
+        }
+        memo[i][op1][op2]=res;
+        return res;
+    }
+    int minArraySum(vector<int>& nums, int k, int op1, int op2) {
+        int n=nums.size();
+        vector<vector<vector<int>>>memo(n,vector<vector<int>>(op1+1,vector<int>(op2+1,-1)));
+        this->memo=memo;
+        return dp(nums,0,k,op1,op2);
+    }
+};
