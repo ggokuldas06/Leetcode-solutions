@@ -1,0 +1,65 @@
+class Solution {
+public:
+    vector<vector<pair<int,int>>> graph;   
+    vector<int> memo;
+    int MOD = 1e9 + 7;
+
+    vector<int> dik(int n, vector<vector<int>>& edges){
+        vector<vector<pair<int,int>>> graph(n+1);
+
+        for(auto& x: edges){
+            int u = x[0];
+            int v = x[1];
+            int w = x[2];
+            graph[u].push_back({v,w});
+            graph[v].push_back({u,w});
+        }
+
+        this->graph = graph;
+
+        vector<int> dist(n+1, INT_MAX);
+
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+
+        dist[n] = 0;
+        pq.push({0, n});
+
+        while(!pq.empty()){
+            auto [d, u] = pq.top(); 
+            pq.pop();
+
+            if(d > dist[u]) continue;
+
+            for(auto& [v,w]:graph[u]){
+                if(dist[v] > dist[u] + w){ 
+                    dist[v] = dist[u] + w;
+                    pq.push({dist[v], v});
+                }
+            }
+        }
+        return dist;
+    }
+
+    int dp(int curr, vector<int>& dist, int n){
+        if(memo[curr] != -1) return memo[curr];
+
+        long long ways = 0;
+
+        for(auto& [v,w]:graph[curr]){
+            if(dist[v] < dist[curr]){ 
+                ways = (ways + dp(v, dist, n)) % MOD; 
+            }
+        }
+
+        return memo[curr] = ways;
+    }
+
+    int countRestrictedPaths(int n, vector<vector<int>>& edges) {
+        vector<int> dist = dik(n, edges);
+
+        memo.assign(n+1, -1);
+        memo[n] = 1; 
+
+        return dp(1, dist, n); 
+    }
+};
