@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minimumOperations(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>cost(m,vector<int>(10,0));
+        for(int j=0;j<m;j++){
+            vector<int>freq(10,0);
+            for(int i=0;i<n;i++){
+                freq[grid[i][j]]++;
+            }
+            for(int v=0;v<10;v++){
+            cost[j][v]=n-freq[v];}
+        }
+        vector<vector<int>>dp(m,vector<int>(10,INT_MAX));
+        for(int v=0;v<10;v++){
+            dp[0][v]=cost[0][v];
+        }
+        for(int j=1;j<m;j++){
+            for(int v=0;v<10;v++){
+                for(int prev=0;prev<10;prev++){
+                    if(prev!=v){
+                        dp[j][v]=min(dp[j][v],dp[j-1][prev]+cost[j][v]);
+                    }
+                }
+            }
+        }
+        return *min_element(dp[m-1].begin(),dp[m-1].end());
+    }
+};
