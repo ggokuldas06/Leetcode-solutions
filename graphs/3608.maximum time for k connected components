@@ -1,0 +1,57 @@
+class Solution {
+public:
+    void dfs(vector<vector<pair<int,int>>>& graph, int x, vector<bool>& seen, int lim) {
+        stack<int> s;
+        s.push(x);
+        seen[x] = true;
+        while (!s.empty()) {
+            int curr = s.top();
+            s.pop();
+            for (auto& [i,d]:graph[curr]) {
+                if (d && d > lim && !seen[i]) {
+                    seen[i] = true;
+                    s.push(i);
+                }
+            }
+        }
+    }
+
+    bool check(vector<vector<pair<int,int>>>& graph, int k, int x) {
+        int n = graph.size();
+        vector<bool> seen(n, false);
+        int dis = 0;
+        for (int i = 0; i < n; i++) {
+            if (!seen[i]) {
+                dis++;
+                dfs(graph, i, seen, x);
+            }
+        }
+
+        return dis >= k;
+    }
+
+    int minTime(int n, vector<vector<int>>& edges, int k) {
+        vector<vector<pair<int,int>>> graph(n);
+        int left = INT_MAX;
+        int right = INT_MIN;
+        for (vector<int>& x : edges) {
+            graph[x[0]].push_back({x[1],x[2]});
+            graph[x[1]].push_back({x[0],x[2]});
+            left = min(left, x[2]);
+            right = max(right, x[2]);
+        }
+        if (check(graph, k, 0))
+            return 0;
+        int ans = right;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (check(graph, k, mid)) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
