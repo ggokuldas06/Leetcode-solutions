@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int gcd(int a,int b){
+        if(b==0)return a;
+        return gcd(b,a%b);
+    }
+    long long numberOfSubsequences(vector<int>& nums) {
+        long long ans=0;
+        map<pair<int,int>,int>hash;
+        int n=nums.size();
+        for(int r=4;r<n-2;r++){
+                int q=r-2;
+            for(int p=0;p<=r-4;p++){
+                int g=gcd(nums[p],nums[q]);
+                pair<int,int> rem={nums[p]/g,nums[q]/g};
+                hash[rem]++;
+            }
+            for(int s=r+2;s<n;s++){
+                int g=gcd(nums[s],nums[r]);
+                pair<int,int> rem={nums[s]/g,nums[r]/g};
+                ans+=hash[rem];
+            }
+        }
+        return ans;
+    }
+};
