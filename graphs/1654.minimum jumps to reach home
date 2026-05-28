@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minimumJumps(vector<int>& forbidden, int a, int b, int x) {
+        queue<vector<int>> q;
+        q.push({0,0,0});
+        unordered_set<int> hash(forbidden.begin(), forbidden.end());
+        set<pair<int,int>> vis;
+        int limit = 6000;
+        while(!q.empty()){
+            int curr = q.front()[0];
+            int curr_j = q.front()[1];
+            int prev = q.front()[2];
+            q.pop();
+            if(curr == x)
+                return curr_j;
+            if(curr < 0 || curr > limit || hash.count(curr))
+                continue;
+            if(vis.count({curr, prev}))
+                continue;
+            vis.insert({curr, prev});
+            q.push({curr + a, curr_j + 1, 0});
+            if(prev == 0){
+                q.push({curr - b, curr_j + 1, 1});
+            }
+        }
+        return -1;
+    }
+};
