@@ -1,0 +1,32 @@
+class Solution {
+public:
+    long long retard(int x1,int y1,int x2,int y2){
+            return abs(x1-x2) + abs(y1-y2);
+        }
+
+    int minimumCost(vector<int>& start, vector<int>& target, vector<vector<int>>& shit) {
+        long long ans=retard(start[0],start[1],target[0],target[1]);
+        int n=shit.size();
+        vector<long long>dist(n,-1);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
+        for(int i=0;i<n;i++){
+            dist[i]=retard(start[0],start[1],shit[i][0],shit[i][1]);
+            q.push({dist[i],i});
+        }
+        while(!q.empty()){
+            auto [d,i]=q.top();q.pop();
+            long long ar=d+shit[i][4];
+            ans=min(ans,ar+retard(shit[i][2],shit[i][3],target[0],target[1]));
+
+            for(int j=0;j<n;j++){
+                long long nd =
+                    ar + retard(shit[i][2], shit[i][3],shit[j][0], shit[j][1]);
+                    if(nd<dist[j]){
+                        dist[j]=nd;
+                        q.push({dist[j],j});
+                    }
+            }
+        }
+        return (int)ans;
+    }
+};
