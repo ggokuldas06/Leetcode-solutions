@@ -1,0 +1,51 @@
+class Solution {
+public:
+    bool isp(int x){
+        if(x<=1)return false;
+        for(int i=2;i*i<=x;i++){
+            if(x%i ==0)return false;
+        }
+        return true;
+    }
+
+    int minOperations(int n, int m) {
+        if(isp(n) || isp(m))return -1;
+        string a=to_string(n);
+        string b=to_string(m);
+        priority_queue<pair<int,string>,vector<pair<int,string>>,greater<pair<int,string>>>q;
+        unordered_map<string,int>hash;
+        q.push({n,a});
+        hash[a]=n;
+        while(!q.empty()){
+            auto [ans,curr]=q.top();q.pop();
+            if(curr==b)return ans;
+            if(ans>hash[curr])continue;
+            string temp=curr;
+            for(int i=0;i<curr.size();i++){
+                if(curr[i]!='9'){
+                    temp[i]=curr[i]+1;
+                    if(!isp(stoi(temp))){
+                        int nd=stoi(temp)+ans;
+                        if(!hash.count(temp)||hash[temp]>nd){
+                            hash[temp]=nd;
+                            q.push({nd,temp});
+                        }
+                    }
+                    temp[i]=curr[i];
+                }
+                if(curr[i]!='0'){
+                    temp[i]=curr[i]-1;
+                    if(!isp(stoi(temp)) && temp[0]!='0'){
+                        int nd=stoi(temp)+ans;
+                        if(!hash.count(temp)||hash[temp]>nd){
+                            hash[temp]=nd;
+                            q.push({nd,temp});
+                        }
+                    }
+                    temp[i]=curr[i];
+                }
+            }
+        }
+    return -1;
+    }
+};
